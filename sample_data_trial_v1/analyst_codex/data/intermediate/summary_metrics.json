@@ -1,0 +1,65 @@
+{
+  "baseline": {
+    "total_qty": 6732.06,
+    "total_margin": 72922961.11,
+    "top_segments": [
+      {
+        "segment": "consumer",
+        "demand_qty": 1386.6666666666667,
+        "demand_share": 0.2059795126306868,
+        "share": 0.20597951263068684
+      },
+      {
+        "segment": "automotive",
+        "demand_qty": 1154.0,
+        "demand_share": 0.1714185270979418,
+        "share": 0.17141852709794178
+      },
+      {
+        "segment": "others",
+        "demand_qty": 1064.75,
+        "demand_share": 0.1581610716876373,
+        "share": 0.15816107168763735
+      }
+    ]
+  },
+  "optimized": {
+    "total_qty": 6732.06,
+    "total_margin": 10511127.19,
+    "top_segments": [
+      {
+        "segment": "consumer",
+        "allocated_qty": 1386.6666666666667,
+        "share": 0.206
+      },
+      {
+        "segment": "automotive",
+        "allocated_qty": 1154.0,
+        "share": 0.171
+      },
+      {
+        "segment": "others",
+        "allocated_qty": 1064.75,
+        "share": 0.158
+      }
+    ]
+  },
+  "delta": {
+    "qty": 0.0,
+    "margin": -62411833.92
+  },
+  "scenarios": {
+    "best": {
+      "scenario": "PricePlus5",
+      "allocated_qty": 6732.06,
+      "total_margin": 11725889.77,
+      "avg_unit_margin": 1741.7979
+    },
+    "worst": {
+      "scenario": "PriceMinus5",
+      "allocated_qty": 6732.06,
+      "total_margin": 9296364.6,
+      "avg_unit_margin": 1380.9091
+    }
+  }
+}
