@@ -1,0 +1,1770 @@
+{
+  "utilization": {
+    "total_capacity": 1056000,
+    "total_demand": 6732,
+    "current_utilization_rate": 0.006375,
+    "current_utilization_pct": 0.6375,
+    "target_demand_for_90pct": 950400,
+    "demand_gap": 943667,
+    "num_products": 20,
+    "avg_qty_per_product_current": 336,
+    "avg_qty_per_product_target": 47520
+  },
+  "profit_drivers": {
+    "baseline_margin": 10511127.19,
+    "baseline_qty": 6732.06,
+    "drivers": [
+      {
+        "scenario": "PricePlus5",
+        "total_margin": 11725889.77,
+        "impact_amount": 1214762.58,
+        "impact_pct": 11.5569,
+        "allocated_qty": 6732.06
+      },
+      {
+        "scenario": "PriceMinus5",
+        "total_margin": 9296364.6,
+        "impact_amount": -1214762.59,
+        "impact_pct": -11.5569,
+        "allocated_qty": 6732.06
+      },
+      {
+        "scenario": "CostPlus5",
+        "total_margin": 9821920.96,
+        "impact_amount": -689206.23,
+        "impact_pct": -6.5569,
+        "allocated_qty": 6732.06
+      },
+      {
+        "scenario": "CostMinus5",
+        "total_margin": 11200333.41,
+        "impact_amount": 689206.22,
+        "impact_pct": 6.5569,
+        "allocated_qty": 6732.06
+      },
+      {
+        "scenario": "DemandMinus10",
+        "total_margin": 9978847.45,
+        "impact_amount": -532279.74,
+        "impact_pct": -5.064,
+        "allocated_qty": 6058.86
+      },
+      {
+        "scenario": "DemandPlus10",
+        "total_margin": 10932420.88,
+        "impact_amount": 421293.69,
+        "impact_pct": 4.0081,
+        "allocated_qty": 7247.5
+      }
+    ]
+  },
+  "aggregates": {
+    "by_product": [
+      {
+        "product_code": "P001",
+        "year": 2022,
+        "qty": 1577,
+        "amount": 2380527.84,
+        "type": "販売",
+        "amount_usd": 15870.185599999999
+      },
+      {
+        "product_code": "P001",
+        "year": 2023,
+        "qty": 2155,
+        "amount": 3025836.6900000004,
+        "type": "販売",
+        "amount_usd": 20172.2446
+      },
+      {
+        "product_code": "P001",
+        "year": 2024,
+        "qty": 2401,
+        "amount": 3462434.0700000003,
+        "type": "販売",
+        "amount_usd": 23082.8938
+      },
+      {
+        "product_code": "P002",
+        "year": 2022,
+        "qty": 2983,
+        "amount": 4197294.359999999,
+        "type": "販売",
+        "amount_usd": 27981.962399999997
+      },
+      {
+        "product_code": "P002",
+        "year": 2023,
+        "qty": 2729,
+        "amount": 3964718.93,
+        "type": "販売",
+        "amount_usd": 26431.459533333335
+      },
+      {
+        "product_code": "P002",
+        "year": 2024,
+        "qty": 3420,
+        "amount": 5302045.52,
+        "type": "販売",
+        "amount_usd": 35346.97013333333
+      },
+      {
+        "product_code": "P003",
+        "year": 2022,
+        "qty": 2381,
+        "amount": 2829887.74,
+        "type": "販売",
+        "amount_usd": 18865.918266666667
+      },
+      {
+        "product_code": "P003",
+        "year": 2023,
+        "qty": 3498,
+        "amount": 4066632.16,
+        "type": "販売",
+        "amount_usd": 27110.88106666667
+      },
+      {
+        "product_code": "P003",
+        "year": 2024,
+        "qty": 3142,
+        "amount": 3709574.27,
+        "type": "販売",
+        "amount_usd": 24730.495133333334
+      },
+      {
+        "product_code": "P004",
+        "year": 2022,
+        "qty": 3034,
+        "amount": 4630022.04,
+        "type": "販売",
+        "amount_usd": 30866.8136
+      },
+      {
+        "product_code": "P004",
+        "year": 2023,
+        "qty": 3698,
+        "amount": 6134247.029999999,
+        "type": "販売",
+        "amount_usd": 40894.9802
+      },
+      {
+        "product_code": "P004",
+        "year": 2024,
+        "qty": 2998,
+        "amount": 4887565.0600000005,
+        "type": "販売",
+        "amount_usd": 32583.76706666667
+      },
+      {
+        "product_code": "P005",
+        "year": 2022,
+        "qty": 1008,
+        "amount": 1586356.0,
+        "type": "販売",
+        "amount_usd": 10575.706666666667
+      },
+      {
+        "product_code": "P005",
+        "year": 2023,
+        "qty": 1012,
+        "amount": 1647086.53,
+        "type": "販売",
+        "amount_usd": 10980.576866666666
+      },
+      {
+        "product_code": "P005",
+        "year": 2024,
+        "qty": 1227,
+        "amount": 1932806.46,
+        "type": "販売",
+        "amount_usd": 12885.3764
+      },
+      {
+        "product_code": "P006",
+        "year": 2022,
+        "qty": 3954,
+        "amount": 4608391.89,
+        "type": "販売",
+        "amount_usd": 30722.612599999997
+      },
+      {
+        "product_code": "P006",
+        "year": 2023,
+        "qty": 3433,
+        "amount": 4112045.12,
+        "type": "販売",
+        "amount_usd": 27413.634133333333
+      },
+      {
+        "product_code": "P006",
+        "year": 2024,
+        "qty": 5232,
+        "amount": 6351443.08,
+        "type": "販売",
+        "amount_usd": 42342.95386666667
+      },
+      {
+        "product_code": "P007",
+        "year": 2022,
+        "qty": 3769,
+        "amount": 4077766.18,
+        "type": "販売",
+        "amount_usd": 27185.10786666667
+      },
+      {
+        "product_code": "P007",
+        "year": 2023,
+        "qty": 3711,
+        "amount": 4539627.17,
+        "type": "販売",
+        "amount_usd": 30264.18113333333
+      },
+      {
+        "product_code": "P007",
+        "year": 2024,
+        "qty": 4038,
+        "amount": 4767070.390000001,
+        "type": "販売",
+        "amount_usd": 31780.46926666667
+      },
+      {
+        "product_code": "P008",
+        "year": 2022,
+        "qty": 2817,
+        "amount": 3579733.3899999997,
+        "type": "販売",
+        "amount_usd": 23864.889266666665
+      },
+      {
+        "product_code": "P008",
+        "year": 2023,
+        "qty": 2653,
+        "amount": 3632453.75,
+        "type": "販売",
+        "amount_usd": 24216.358333333334
+      },
+      {
+        "product_code": "P008",
+        "year": 2024,
+        "qty": 3086,
+        "amount": 4397291.550000001,
+        "type": "販売",
+        "amount_usd": 29315.277000000006
+      },
+      {
+        "product_code": "P009",
+        "year": 2022,
+        "qty": 243,
+        "amount": 1676111.5,
+        "type": "販売",
+        "amount_usd": 11174.076666666666
+      },
+      {
+        "product_code": "P009",
+        "year": 2023,
+        "qty": 282,
+        "amount": 2019927.71,
+        "type": "販売",
+        "amount_usd": 13466.184733333333
+      },
+      {
+        "product_code": "P009",
+        "year": 2024,
+        "qty": 287,
+        "amount": 1872634.67,
+        "type": "販売",
+        "amount_usd": 12484.231133333333
+      },
+      {
+        "product_code": "P010",
+        "year": 2022,
+        "qty": 166,
+        "amount": 1065572.98,
+        "type": "販売",
+        "amount_usd": 7103.819866666667
+      },
+      {
+        "product_code": "P010",
+        "year": 2023,
+        "qty": 284,
+        "amount": 1968978.59,
+        "type": "販売",
+        "amount_usd": 13126.523933333334
+      },
+      {
+        "product_code": "P010",
+        "year": 2024,
+        "qty": 223,
+        "amount": 1341977.6,
+        "type": "販売",
+        "amount_usd": 8946.517333333333
+      },
+      {
+        "product_code": "P011",
+        "year": 2022,
+        "qty": 236,
+        "amount": 1802313.95,
+        "type": "販売",
+        "amount_usd": 12015.426333333333
+      },
+      {
+        "product_code": "P011",
+        "year": 2023,
+        "qty": 218,
+        "amount": 1683772.83,
+        "type": "販売",
+        "amount_usd": 11225.1522
+      },
+      {
+        "product_code": "P011",
+        "year": 2024,
+        "qty": 193,
+        "amount": 1501987.23,
+        "type": "販売",
+        "amount_usd": 10013.2482
+      },
+      {
+        "product_code": "P012",
+        "year": 2022,
+        "qty": 213,
+        "amount": 1517971.66,
+        "type": "販売",
+        "amount_usd": 10119.811066666665
+      },
+      {
+        "product_code": "P012",
+        "year": 2023,
+        "qty": 195,
+        "amount": 1337401.51,
+        "type": "販売",
+        "amount_usd": 8916.010066666668
+      },
+      {
+        "product_code": "P012",
+        "year": 2024,
+        "qty": 230,
+        "amount": 1579228.92,
+        "type": "販売",
+        "amount_usd": 10528.192799999999
+      },
+      {
+        "product_code": "P013",
+        "year": 2022,
+        "qty": 465,
+        "amount": 2941218.56,
+        "type": "販売",
+        "amount_usd": 19608.123733333334
+      },
+      {
+        "product_code": "P013",
+        "year": 2023,
+        "qty": 392,
+        "amount": 2579239.19,
+        "type": "販売",
+        "amount_usd": 17194.927933333332
+      },
+      {
+        "product_code": "P013",
+        "year": 2024,
+        "qty": 411,
+        "amount": 2755927.04,
+        "type": "販売",
+        "amount_usd": 18372.846933333334
+      },
+      {
+        "product_code": "P014",
+        "year": 2022,
+        "qty": 130,
+        "amount": 802019.3,
+        "type": "販売",
+        "amount_usd": 5346.7953333333335
+      },
+      {
+        "product_code": "P014",
+        "year": 2023,
+        "qty": 226,
+        "amount": 1505480.49,
+        "type": "販売",
+        "amount_usd": 10036.5366
+      },
+      {
+        "product_code": "P014",
+        "year": 2024,
+        "qty": 217,
+        "amount": 1442029.55,
+        "type": "販売",
+        "amount_usd": 9613.530333333334
+      },
+      {
+        "product_code": "P015",
+        "year": 2022,
+        "qty": 471,
+        "amount": 3341687.25,
+        "type": "販売",
+        "amount_usd": 22277.915
+      },
+      {
+        "product_code": "P015",
+        "year": 2023,
+        "qty": 395,
+        "amount": 2779310.4299999997,
+        "type": "販売",
+        "amount_usd": 18528.7362
+      },
+      {
+        "product_code": "P015",
+        "year": 2024,
+        "qty": 465,
+        "amount": 3306440.45,
+        "type": "販売",
+        "amount_usd": 22042.936333333335
+      },
+      {
+        "product_code": "P016",
+        "year": 2022,
+        "qty": 324,
+        "amount": 2492047.23,
+        "type": "販売",
+        "amount_usd": 16613.6482
+      },
+      {
+        "product_code": "P016",
+        "year": 2023,
+        "qty": 206,
+        "amount": 1497124.48,
+        "type": "販売",
+        "amount_usd": 9980.829866666667
+      },
+      {
+        "product_code": "P016",
+        "year": 2024,
+        "qty": 218,
+        "amount": 1709274.2,
+        "type": "販売",
+        "amount_usd": 11395.161333333333
+      },
+      {
+        "product_code": "P017",
+        "year": 2022,
+        "qty": 292,
+        "amount": 1898790.35,
+        "type": "販売",
+        "amount_usd": 12658.602333333334
+      },
+      {
+        "product_code": "P017",
+        "year": 2023,
+        "qty": 266,
+        "amount": 1806920.06,
+        "type": "販売",
+        "amount_usd": 12046.133733333334
+      },
+      {
+        "product_code": "P017",
+        "year": 2024,
+        "qty": 269,
+        "amount": 1794980.0,
+        "type": "販売",
+        "amount_usd": 11966.533333333333
+      },
+      {
+        "product_code": "P018",
+        "year": 2022,
+        "qty": 438,
+        "amount": 3057097.54,
+        "type": "販売",
+        "amount_usd": 20380.650266666667
+      },
+      {
+        "product_code": "P018",
+        "year": 2023,
+        "qty": 476,
+        "amount": 3138593.04,
+        "type": "販売",
+        "amount_usd": 20923.9536
+      },
+      {
+        "product_code": "P018",
+        "year": 2024,
+        "qty": 422,
+        "amount": 3004410.91,
+        "type": "販売",
+        "amount_usd": 20029.406066666666
+      },
+      {
+        "product_code": "P019",
+        "year": 2022,
+        "qty": 433,
+        "amount": 2692617.09,
+        "type": "販売",
+        "amount_usd": 17950.7806
+      },
+      {
+        "product_code": "P019",
+        "year": 2023,
+        "qty": 339,
+        "amount": 2064059.14,
+        "type": "販売",
+        "amount_usd": 13760.394266666666
+      },
+      {
+        "product_code": "P019",
+        "year": 2024,
+        "qty": 374,
+        "amount": 2407741.47,
+        "type": "販売",
+        "amount_usd": 16051.609800000002
+      },
+      {
+        "product_code": "P020",
+        "year": 2022,
+        "qty": 377,
+        "amount": 2699680.31,
+        "type": "販売",
+        "amount_usd": 17997.868733333333
+      },
+      {
+        "product_code": "P020",
+        "year": 2023,
+        "qty": 321,
+        "amount": 2085709.49,
+        "type": "販売",
+        "amount_usd": 13904.729933333334
+      },
+      {
+        "product_code": "P020",
+        "year": 2024,
+        "qty": 467,
+        "amount": 3297169.26,
+        "type": "販売",
+        "amount_usd": 21981.128399999998
+      },
+      {
+        "product_code": "P001",
+        "year": 2022,
+        "qty": 1600,
+        "amount": 1407399.9674951525,
+        "type": "生産",
+        "amount_usd": 9382.666449967683
+      },
+      {
+        "product_code": "P001",
+        "year": 2023,
+        "qty": 2187,
+        "amount": 1688463.4127719635,
+        "type": "生産",
+        "amount_usd": 11256.42275181309
+      },
+      {
+        "product_code": "P001",
+        "year": 2024,
+        "qty": 2434,
+        "amount": 1608766.9169805853,
+        "type": "生産",
+        "amount_usd": 10725.11277987057
+      },
+      {
+        "product_code": "P002",
+        "year": 2022,
+        "qty": 3051,
+        "amount": 2349910.1281574448,
+        "type": "生産",
+        "amount_usd": 15666.067521049632
+      },
+      {
+        "product_code": "P002",
+        "year": 2023,
+        "qty": 2730,
+        "amount": 2202416.4649102795,
+        "type": "生産",
+        "amount_usd": 14682.776432735196
+      },
+      {
+        "product_code": "P002",
+        "year": 2024,
+        "qty": 3541,
+        "amount": 2701402.679176605,
+        "type": "生産",
+        "amount_usd": 18009.3511945107
+      },
+      {
+        "product_code": "P003",
+        "year": 2022,
+        "qty": 2434,
+        "amount": 1795447.3782925813,
+        "type": "生産",
+        "amount_usd": 11969.649188617208
+      },
+      {
+        "product_code": "P003",
+        "year": 2023,
+        "qty": 3507,
+        "amount": 2342502.732323322,
+        "type": "生産",
+        "amount_usd": 15616.68488215548
+      },
+      {
+        "product_code": "P003",
+        "year": 2024,
+        "qty": 3296,
+        "amount": 2043469.620340904,
+        "type": "生産",
+        "amount_usd": 13623.130802272693
+      },
+      {
+        "product_code": "P004",
+        "year": 2022,
+        "qty": 3080,
+        "amount": 2219753.4491415443,
+        "type": "生産",
+        "amount_usd": 14798.356327610296
+      },
+      {
+        "product_code": "P004",
+        "year": 2023,
+        "qty": 3826,
+        "amount": 3406697.72259637,
+        "type": "生産",
+        "amount_usd": 22711.318150642466
+      },
+      {
+        "product_code": "P004",
+        "year": 2024,
+        "qty": 3090,
+        "amount": 2397617.9053572994,
+        "type": "生産",
+        "amount_usd": 15984.119369048662
+      },
+      {
+        "product_code": "P005",
+        "year": 2022,
+        "qty": 1054,
+        "amount": 872921.6106036206,
+        "type": "生産",
+        "amount_usd": 5819.477404024137
+      },
+      {
+        "product_code": "P005",
+        "year": 2023,
+        "qty": 1024,
+        "amount": 946829.9529290424,
+        "type": "生産",
+        "amount_usd": 6312.199686193616
+      },
+      {
+        "product_code": "P005",
+        "year": 2024,
+        "qty": 1230,
+        "amount": 963116.2409379556,
+        "type": "生産",
+        "amount_usd": 6420.77493958637
+      },
+      {
+        "product_code": "P006",
+        "year": 2022,
+        "qty": 4108,
+        "amount": 2566951.545151018,
+        "type": "生産",
+        "amount_usd": 17113.010301006787
+      },
+      {
+        "product_code": "P006",
+        "year": 2023,
+        "qty": 3579,
+        "amount": 2396348.57848762,
+        "type": "生産",
+        "amount_usd": 15975.657189917469
+      },
+      {
+        "product_code": "P006",
+        "year": 2024,
+        "qty": 5393,
+        "amount": 3859222.411112454,
+        "type": "生産",
+        "amount_usd": 25728.14940741636
+      },
+      {
+        "product_code": "P007",
+        "year": 2022,
+        "qty": 3893,
+        "amount": 2115578.697504929,
+        "type": "生産",
+        "amount_usd": 14103.857983366192
+      },
+      {
+        "product_code": "P007",
+        "year": 2023,
+        "qty": 3804,
+        "amount": 2555956.5298822825,
+        "type": "生産",
+        "amount_usd": 17039.710199215217
+      },
+      {
+        "product_code": "P007",
+        "year": 2024,
+        "qty": 4047,
+        "amount": 2160485.435553022,
+        "type": "生産",
+        "amount_usd": 14403.236237020148
+      },
+      {
+        "product_code": "P008",
+        "year": 2022,
+        "qty": 2895,
+        "amount": 1821638.7007467912,
+        "type": "生産",
+        "amount_usd": 12144.258004978608
+      },
+      {
+        "product_code": "P008",
+        "year": 2023,
+        "qty": 2776,
+        "amount": 1916010.1112409155,
+        "type": "生産",
+        "amount_usd": 12773.400741606103
+      },
+      {
+        "product_code": "P008",
+        "year": 2024,
+        "qty": 3211,
+        "amount": 2693986.404349825,
+        "type": "生産",
+        "amount_usd": 17959.909362332164
+      },
+      {
+        "product_code": "P009",
+        "year": 2022,
+        "qty": 253,
+        "amount": 999919.2632730976,
+        "type": "生産",
+        "amount_usd": 6666.12842182065
+      },
+      {
+        "product_code": "P009",
+        "year": 2023,
+        "qty": 293,
+        "amount": 1271312.6622624032,
+        "type": "生産",
+        "amount_usd": 8475.417748416021
+      },
+      {
+        "product_code": "P009",
+        "year": 2024,
+        "qty": 289,
+        "amount": 1100544.2385562852,
+        "type": "生産",
+        "amount_usd": 7336.961590375235
+      },
+      {
+        "product_code": "P010",
+        "year": 2022,
+        "qty": 167,
+        "amount": 604802.3764998676,
+        "type": "生産",
+        "amount_usd": 4032.015843332451
+      },
+      {
+        "product_code": "P010",
+        "year": 2023,
+        "qty": 294,
+        "amount": 1244399.4666334302,
+        "type": "生産",
+        "amount_usd": 8295.996444222868
+      },
+      {
+        "product_code": "P010",
+        "year": 2024,
+        "qty": 224,
+        "amount": 705058.1414300923,
+        "type": "生産",
+        "amount_usd": 4700.387609533948
+      },
+      {
+        "product_code": "P011",
+        "year": 2022,
+        "qty": 248,
+        "amount": 1176583.9473113285,
+        "type": "生産",
+        "amount_usd": 7843.892982075523
+      },
+      {
+        "product_code": "P011",
+        "year": 2023,
+        "qty": 227,
+        "amount": 1165248.9563728443,
+        "type": "生産",
+        "amount_usd": 7768.326375818962
+      },
+      {
+        "product_code": "P011",
+        "year": 2024,
+        "qty": 195,
+        "amount": 940324.2496789956,
+        "type": "生産",
+        "amount_usd": 6268.828331193304
+      },
+      {
+        "product_code": "P012",
+        "year": 2022,
+        "qty": 220,
+        "amount": 979839.2962188384,
+        "type": "生産",
+        "amount_usd": 6532.261974792256
+      },
+      {
+        "product_code": "P012",
+        "year": 2023,
+        "qty": 195,
+        "amount": 896147.9603672858,
+        "type": "生産",
+        "amount_usd": 5974.319735781905
+      },
+      {
+        "product_code": "P012",
+        "year": 2024,
+        "qty": 241,
+        "amount": 899937.1336366651,
+        "type": "生産",
+        "amount_usd": 5999.5808909111
+      },
+      {
+        "product_code": "P013",
+        "year": 2022,
+        "qty": 480,
+        "amount": 1705592.9371222276,
+        "type": "生産",
+        "amount_usd": 11370.619580814851
+      },
+      {
+        "product_code": "P013",
+        "year": 2023,
+        "qty": 396,
+        "amount": 1499615.6949836512,
+        "type": "生産",
+        "amount_usd": 9997.437966557674
+      },
+      {
+        "product_code": "P013",
+        "year": 2024,
+        "qty": 420,
+        "amount": 1562294.9388826035,
+        "type": "生産",
+        "amount_usd": 10415.299592550691
+      },
+      {
+        "product_code": "P014",
+        "year": 2022,
+        "qty": 131,
+        "amount": 476332.9429010655,
+        "type": "生産",
+        "amount_usd": 3175.55295267377
+      },
+      {
+        "product_code": "P014",
+        "year": 2023,
+        "qty": 227,
+        "amount": 917784.445997557,
+        "type": "生産",
+        "amount_usd": 6118.562973317047
+      },
+      {
+        "product_code": "P014",
+        "year": 2024,
+        "qty": 226,
+        "amount": 1015170.772475646,
+        "type": "生産",
+        "amount_usd": 6767.80514983764
+      },
+      {
+        "product_code": "P015",
+        "year": 2022,
+        "qty": 482,
+        "amount": 1955809.1298860493,
+        "type": "生産",
+        "amount_usd": 13038.727532573663
+      },
+      {
+        "product_code": "P015",
+        "year": 2023,
+        "qty": 408,
+        "amount": 1701346.4247642776,
+        "type": "生産",
+        "amount_usd": 11342.309498428518
+      },
+      {
+        "product_code": "P015",
+        "year": 2024,
+        "qty": 480,
+        "amount": 2216192.851409825,
+        "type": "生産",
+        "amount_usd": 14774.619009398833
+      },
+      {
+        "product_code": "P016",
+        "year": 2022,
+        "qty": 328,
+        "amount": 1450450.9678502542,
+        "type": "生産",
+        "amount_usd": 9669.673119001694
+      },
+      {
+        "product_code": "P016",
+        "year": 2023,
+        "qty": 212,
+        "amount": 1012086.6511463544,
+        "type": "生産",
+        "amount_usd": 6747.244340975696
+      },
+      {
+        "product_code": "P016",
+        "year": 2024,
+        "qty": 224,
+        "amount": 1135646.957792445,
+        "type": "生産",
+        "amount_usd": 7570.9797186163005
+      },
+      {
+        "product_code": "P017",
+        "year": 2022,
+        "qty": 294,
+        "amount": 966238.7374379006,
+        "type": "生産",
+        "amount_usd": 6441.591582919337
+      },
+      {
+        "product_code": "P017",
+        "year": 2023,
+        "qty": 277,
+        "amount": 1080290.8340450746,
+        "type": "生産",
+        "amount_usd": 7201.938893633831
+      },
+      {
+        "product_code": "P017",
+        "year": 2024,
+        "qty": 271,
+        "amount": 988510.7358449944,
+        "type": "生産",
+        "amount_usd": 6590.071572299963
+      },
+      {
+        "product_code": "P018",
+        "year": 2022,
+        "qty": 455,
+        "amount": 1787186.2225934346,
+        "type": "生産",
+        "amount_usd": 11914.574817289564
+      },
+      {
+        "product_code": "P018",
+        "year": 2023,
+        "qty": 480,
+        "amount": 1637486.305507947,
+        "type": "生産",
+        "amount_usd": 10916.57537005298
+      },
+      {
+        "product_code": "P018",
+        "year": 2024,
+        "qty": 442,
+        "amount": 1897991.6882656435,
+        "type": "生産",
+        "amount_usd": 12653.277921770958
+      },
+      {
+        "product_code": "P019",
+        "year": 2022,
+        "qty": 437,
+        "amount": 1629613.9416624042,
+        "type": "生産",
+        "amount_usd": 10864.092944416028
+      },
+      {
+        "product_code": "P019",
+        "year": 2023,
+        "qty": 351,
+        "amount": 1146244.5552725056,
+        "type": "生産",
+        "amount_usd": 7641.630368483371
+      },
+      {
+        "product_code": "P019",
+        "year": 2024,
+        "qty": 380,
+        "amount": 1556138.5759458917,
+        "type": "生産",
+        "amount_usd": 10374.257172972611
+      },
+      {
+        "product_code": "P020",
+        "year": 2022,
+        "qty": 394,
+        "amount": 1581491.0965745754,
+        "type": "生産",
+        "amount_usd": 10543.273977163835
+      },
+      {
+        "product_code": "P020",
+        "year": 2023,
+        "qty": 324,
+        "amount": 1384410.2293325018,
+        "type": "生産",
+        "amount_usd": 9229.401528883345
+      },
+      {
+        "product_code": "P020",
+        "year": 2024,
+        "qty": 480,
+        "amount": 1891633.3230896597,
+        "type": "生産",
+        "amount_usd": 12610.888820597731
+      }
+    ],
+    "by_plant": [
+      {
+        "plant": "A",
+        "year": 2022,
+        "qty": 11339,
+        "amount": 24274029.6,
+        "type": "販売",
+        "amount_usd": 161826.864
+      },
+      {
+        "plant": "A",
+        "year": 2023,
+        "qty": 12446,
+        "amount": 26616044.84,
+        "type": "販売",
+        "amount_usd": 177440.29893333334
+      },
+      {
+        "plant": "A",
+        "year": 2024,
+        "qty": 18049,
+        "amount": 38300769.0,
+        "type": "販売",
+        "amount_usd": 255338.46
+      },
+      {
+        "plant": "B",
+        "year": 2022,
+        "qty": 13972,
+        "amount": 29603077.56,
+        "type": "販売",
+        "amount_usd": 197353.8504
+      },
+      {
+        "plant": "B",
+        "year": 2023,
+        "qty": 14043,
+        "amount": 28973119.5,
+        "type": "販売",
+        "amount_usd": 193154.13
+      },
+      {
+        "plant": "B",
+        "year": 2024,
+        "qty": 11271,
+        "amount": 22523262.7,
+        "type": "販売",
+        "amount_usd": 150155.08466666666
+      },
+      {
+        "plant": "A",
+        "year": 2022,
+        "qty": 11609,
+        "amount": 13076540.798562307,
+        "type": "生産",
+        "amount_usd": 87176.93865708205
+      },
+      {
+        "plant": "A",
+        "year": 2023,
+        "qty": 12711,
+        "amount": 14948661.353342935,
+        "type": "生産",
+        "amount_usd": 99657.74235561957
+      },
+      {
+        "plant": "A",
+        "year": 2024,
+        "qty": 18443,
+        "amount": 20560906.912180364,
+        "type": "生産",
+        "amount_usd": 137072.71274786908
+      },
+      {
+        "plant": "B",
+        "year": 2022,
+        "qty": 14395,
+        "amount": 17386921.53786182,
+        "type": "生産",
+        "amount_usd": 115912.81025241214
+      },
+      {
+        "plant": "B",
+        "year": 2023,
+        "qty": 14406,
+        "amount": 17462938.338484693,
+        "type": "生産",
+        "amount_usd": 116419.58892323129
+      },
+      {
+        "plant": "B",
+        "year": 2024,
+        "qty": 11671,
+        "amount": 13776604.308637034,
+        "type": "生産",
+        "amount_usd": 91844.02872424689
+      }
+    ],
+    "by_segment": [
+      {
+        "segment": "automotive",
+        "year": 2022,
+        "qty": 7860,
+        "amount": 14011040.91,
+        "type": "販売",
+        "amount_usd": 93406.9394
+      },
+      {
+        "segment": "automotive",
+        "year": 2023,
+        "qty": 7761,
+        "amount": 14416851.55,
+        "type": "販売",
+        "amount_usd": 96112.34366666667
+      },
+      {
+        "segment": "automotive",
+        "year": 2024,
+        "qty": 8613,
+        "amount": 15919031.17,
+        "type": "販売",
+        "amount_usd": 106126.87446666666
+      },
+      {
+        "segment": "chemical",
+        "year": 2022,
+        "qty": 4765,
+        "amount": 8994280.73,
+        "type": "販売",
+        "amount_usd": 59961.87153333334
+      },
+      {
+        "segment": "chemical",
+        "year": 2023,
+        "qty": 4948,
+        "amount": 9797035.04,
+        "type": "販売",
+        "amount_usd": 65313.56693333333
+      },
+      {
+        "segment": "chemical",
+        "year": 2024,
+        "qty": 5515,
+        "amount": 10870452.88,
+        "type": "販売",
+        "amount_usd": 72469.68586666667
+      },
+      {
+        "segment": "construction",
+        "year": 2022,
+        "qty": 2590,
+        "amount": 4668792.41,
+        "type": "販売",
+        "amount_usd": 31125.282733333333
+      },
+      {
+        "segment": "construction",
+        "year": 2023,
+        "qty": 2678,
+        "amount": 4141437.24,
+        "type": "販売",
+        "amount_usd": 27609.5816
+      },
+      {
+        "segment": "construction",
+        "year": 2024,
+        "qty": 2945,
+        "amount": 4943817.43,
+        "type": "販売",
+        "amount_usd": 32958.78286666667
+      },
+      {
+        "segment": "consumer",
+        "year": 2022,
+        "qty": 1063,
+        "amount": 1271837.71,
+        "type": "販売",
+        "amount_usd": 8478.918066666667
+      },
+      {
+        "segment": "consumer",
+        "year": 2023,
+        "qty": 1139,
+        "amount": 1364683.05,
+        "type": "販売",
+        "amount_usd": 9097.887
+      },
+      {
+        "segment": "consumer",
+        "year": 2024,
+        "qty": 1958,
+        "amount": 2339218.45,
+        "type": "販売",
+        "amount_usd": 15594.789666666667
+      },
+      {
+        "segment": "electronics",
+        "year": 2022,
+        "qty": 3720,
+        "amount": 10976709.82,
+        "type": "販売",
+        "amount_usd": 73178.06546666667
+      },
+      {
+        "segment": "electronics",
+        "year": 2023,
+        "qty": 5299,
+        "amount": 13064220.68,
+        "type": "販売",
+        "amount_usd": 87094.80453333333
+      },
+      {
+        "segment": "electronics",
+        "year": 2024,
+        "qty": 4709,
+        "amount": 12578823.4,
+        "type": "販売",
+        "amount_usd": 83858.82266666667
+      },
+      {
+        "segment": "food_beverage",
+        "year": 2022,
+        "qty": 130,
+        "amount": 802019.3,
+        "type": "販売",
+        "amount_usd": 5346.7953333333335
+      },
+      {
+        "segment": "food_beverage",
+        "year": 2023,
+        "qty": 226,
+        "amount": 1505480.49,
+        "type": "販売",
+        "amount_usd": 10036.5366
+      },
+      {
+        "segment": "food_beverage",
+        "year": 2024,
+        "qty": 217,
+        "amount": 1442029.55,
+        "type": "販売",
+        "amount_usd": 9613.530333333334
+      },
+      {
+        "segment": "medical",
+        "year": 2022,
+        "qty": 803,
+        "amount": 5970472.68,
+        "type": "販売",
+        "amount_usd": 39803.1512
+      },
+      {
+        "segment": "medical",
+        "year": 2023,
+        "qty": 706,
+        "amount": 5200825.02,
+        "type": "販売",
+        "amount_usd": 34672.1668
+      },
+      {
+        "segment": "medical",
+        "year": 2024,
+        "qty": 698,
+        "amount": 5083896.1,
+        "type": "販売",
+        "amount_usd": 33892.640666666666
+      },
+      {
+        "segment": "others",
+        "year": 2022,
+        "qty": 4380,
+        "amount": 7181953.6,
+        "type": "販売",
+        "amount_usd": 47879.69066666666
+      },
+      {
+        "segment": "others",
+        "year": 2023,
+        "qty": 3732,
+        "amount": 6098631.27,
+        "type": "販売",
+        "amount_usd": 40657.5418
+      },
+      {
+        "segment": "others",
+        "year": 2024,
+        "qty": 4665,
+        "amount": 7646762.72,
+        "type": "販売",
+        "amount_usd": 50978.41813333333
+      }
+    ]
+  },
+  "samples": {
+    "sales_2022": [
+      {
+        "year": 2022,
+        "product_code": "P001",
+        "plant": "B",
+        "segment": "automotive",
+        "sales_qty": 887,
+        "sales_amount": 1343295.62,
+        "unit_price": 1514.43,
+        "customer_name": "AUTOMOTIVE-C4",
+        "sales_amount_usd": 8955.304133333335,
+        "unit_price_usd": 10.0962
+      },
+      {
+        "year": 2022,
+        "product_code": "P001",
+        "plant": "B",
+        "segment": "construction",
+        "sales_qty": 690,
+        "sales_amount": 1037232.22,
+        "unit_price": 1503.24,
+        "customer_name": "CONSTRUCTION-C4",
+        "sales_amount_usd": 6914.881466666667,
+        "unit_price_usd": 10.0216
+      },
+      {
+        "year": 2022,
+        "product_code": "P002",
+        "plant": "A",
+        "segment": "chemical",
+        "sales_qty": 1397,
+        "sales_amount": 1906850.17,
+        "unit_price": 1364.96,
+        "customer_name": "CHEMICAL-C4",
+        "sales_amount_usd": 12712.334466666665,
+        "unit_price_usd": 9.099733333333333
+      },
+      {
+        "year": 2022,
+        "product_code": "P002",
+        "plant": "A",
+        "segment": "others",
+        "sales_qty": 1586,
+        "sales_amount": 2290444.19,
+        "unit_price": 1444.16,
+        "customer_name": "OTHERS-C5",
+        "sales_amount_usd": 15269.627933333333,
+        "unit_price_usd": 9.627733333333333
+      },
+      {
+        "year": 2022,
+        "product_code": "P003",
+        "plant": "B",
+        "segment": "automotive",
+        "sales_qty": 1347,
+        "sales_amount": 1707135.52,
+        "unit_price": 1267.36,
+        "customer_name": "AUTOMOTIVE-C3",
+        "sales_amount_usd": 11380.903466666667,
+        "unit_price_usd": 8.449066666666665
+      }
+    ],
+    "production_2022": [
+      {
+        "year": 2022,
+        "product_code": "P001",
+        "plant": "B",
+        "production_qty": 1600,
+        "production_cost": 1407399.9674951525,
+        "production_cost_usd": 9382.666449967683
+      },
+      {
+        "year": 2022,
+        "product_code": "P002",
+        "plant": "A",
+        "production_qty": 3051,
+        "production_cost": 2349910.1281574448,
+        "production_cost_usd": 15666.067521049632
+      },
+      {
+        "year": 2022,
+        "product_code": "P003",
+        "plant": "B",
+        "production_qty": 2434,
+        "production_cost": 1795447.3782925813,
+        "production_cost_usd": 11969.649188617208
+      },
+      {
+        "year": 2022,
+        "product_code": "P004",
+        "plant": "A",
+        "production_qty": 3080,
+        "production_cost": 2219753.4491415443,
+        "production_cost_usd": 14798.356327610296
+      },
+      {
+        "year": 2022,
+        "product_code": "P005",
+        "plant": "A",
+        "production_qty": 1054,
+        "production_cost": 872921.6106036206,
+        "production_cost_usd": 5819.477404024137
+      }
+    ],
+    "sales_2023": [
+      {
+        "year": 2023,
+        "product_code": "P001",
+        "plant": "A",
+        "segment": "automotive",
+        "sales_qty": 929,
+        "sales_amount": 1459185.87,
+        "unit_price": 1570.71,
+        "customer_name": "AUTOMOTIVE-C4",
+        "sales_amount_usd": 9727.9058,
+        "unit_price_usd": 10.471400000000001
+      },
+      {
+        "year": 2023,
+        "product_code": "P001",
+        "plant": "B",
+        "segment": "construction",
+        "sales_qty": 1226,
+        "sales_amount": 1566650.82,
+        "unit_price": 1277.86,
+        "customer_name": "CONSTRUCTION-C2",
+        "sales_amount_usd": 10444.3388,
+        "unit_price_usd": 8.519066666666665
+      },
+      {
+        "year": 2023,
+        "product_code": "P002",
+        "plant": "A",
+        "segment": "chemical",
+        "sales_qty": 1216,
+        "sales_amount": 1846588.37,
+        "unit_price": 1518.58,
+        "customer_name": "CHEMICAL-C3",
+        "sales_amount_usd": 12310.589133333335,
+        "unit_price_usd": 10.123866666666666
+      },
+      {
+        "year": 2023,
+        "product_code": "P002",
+        "plant": "A",
+        "segment": "others",
+        "sales_qty": 1513,
+        "sales_amount": 2118130.56,
+        "unit_price": 1399.95,
+        "customer_name": "OTHERS-C5",
+        "sales_amount_usd": 14120.8704,
+        "unit_price_usd": 9.333
+      },
+      {
+        "year": 2023,
+        "product_code": "P003",
+        "plant": "B",
+        "segment": "automotive",
+        "sales_qty": 1723,
+        "sales_amount": 2250237.21,
+        "unit_price": 1306.0,
+        "customer_name": "AUTOMOTIVE-C3",
+        "sales_amount_usd": 15001.5814,
+        "unit_price_usd": 8.706666666666667
+      }
+    ],
+    "production_2023": [
+      {
+        "year": 2023,
+        "product_code": "P001",
+        "plant": "A",
+        "production_qty": 959,
+        "production_cost": 807182.785504322,
+        "production_cost_usd": 5381.218570028814
+      },
+      {
+        "year": 2023,
+        "product_code": "P001",
+        "plant": "B",
+        "production_qty": 1228,
+        "production_cost": 881280.6272676415,
+        "production_cost_usd": 5875.204181784276
+      },
+      {
+        "year": 2023,
+        "product_code": "P002",
+        "plant": "A",
+        "production_qty": 2730,
+        "production_cost": 2202416.4649102795,
+        "production_cost_usd": 14682.776432735196
+      },
+      {
+        "year": 2023,
+        "product_code": "P003",
+        "plant": "B",
+        "production_qty": 3507,
+        "production_cost": 2342502.732323322,
+        "production_cost_usd": 15616.68488215548
+      },
+      {
+        "year": 2023,
+        "product_code": "P004",
+        "plant": "A",
+        "production_qty": 2124,
+        "production_cost": 1978717.0991478493,
+        "production_cost_usd": 13191.447327652328
+      }
+    ],
+    "sales_2024": [
+      {
+        "year": 2024,
+        "product_code": "P001",
+        "plant": "A",
+        "segment": "automotive",
+        "sales_qty": 1455,
+        "sales_amount": 2068768.35,
+        "unit_price": 1421.83,
+        "customer_name": "AUTOMOTIVE-C4",
+        "sales_amount_usd": 13791.789,
+        "unit_price_usd": 9.478866666666667
+      },
+      {
+        "year": 2024,
+        "product_code": "P001",
+        "plant": "A",
+        "segment": "construction",
+        "sales_qty": 946,
+        "sales_amount": 1393665.72,
+        "unit_price": 1473.22,
+        "customer_name": "CONSTRUCTION-C5",
+        "sales_amount_usd": 9291.1048,
+        "unit_price_usd": 9.821466666666668
+      },
+      {
+        "year": 2024,
+        "product_code": "P002",
+        "plant": "A",
+        "segment": "chemical",
+        "sales_qty": 1781,
+        "sales_amount": 2593462.49,
+        "unit_price": 1456.18,
+        "customer_name": "CHEMICAL-C4",
+        "sales_amount_usd": 17289.749933333336,
+        "unit_price_usd": 9.707866666666668
+      },
+      {
+        "year": 2024,
+        "product_code": "P002",
+        "plant": "A",
+        "segment": "others",
+        "sales_qty": 1639,
+        "sales_amount": 2708583.03,
+        "unit_price": 1652.58,
+        "customer_name": "OTHERS-C1",
+        "sales_amount_usd": 18057.2202,
+        "unit_price_usd": 11.017199999999999
+      },
+      {
+        "year": 2024,
+        "product_code": "P003",
+        "plant": "B",
+        "segment": "automotive",
+        "sales_qty": 1846,
+        "sales_amount": 2070436.75,
+        "unit_price": 1121.58,
+        "customer_name": "AUTOMOTIVE-C4",
+        "sales_amount_usd": 13802.911666666667,
+        "unit_price_usd": 7.4772
+      }
+    ],
+    "production_2024": [
+      {
+        "year": 2024,
+        "product_code": "P001",
+        "plant": "A",
+        "production_qty": 2434,
+        "production_cost": 1608766.9169805853,
+        "production_cost_usd": 10725.11277987057
+      },
+      {
+        "year": 2024,
+        "product_code": "P002",
+        "plant": "A",
+        "production_qty": 3541,
+        "production_cost": 2701402.679176605,
+        "production_cost_usd": 18009.3511945107
+      },
+      {
+        "year": 2024,
+        "product_code": "P003",
+        "plant": "B",
+        "production_qty": 3296,
+        "production_cost": 2043469.620340904,
+        "production_cost_usd": 13623.130802272693
+      },
+      {
+        "year": 2024,
+        "product_code": "P004",
+        "plant": "A",
+        "production_qty": 3090,
+        "production_cost": 2397617.9053572994,
+        "production_cost_usd": 15984.119369048662
+      },
+      {
+        "year": 2024,
+        "product_code": "P005",
+        "plant": "A",
+        "production_qty": 1230,
+        "production_cost": 963116.2409379556,
+        "production_cost_usd": 6420.77493958637
+      }
+    ],
+    "product_master": [
+      {
+        "product_code": "P001",
+        "product_name": "アクセルハウジング",
+        "price_band": "low",
+        "unit_price_min": 1200,
+        "unit_price_max": 1600,
+        "allowed_plants": "A|B",
+        "allowed_segments": "automotive|construction|consumer",
+        "unit_price_min_usd": 8.0,
+        "unit_price_max_usd": 10.666666666666666
+      },
+      {
+        "product_code": "P002",
+        "product_name": "断熱コンポジット",
+        "price_band": "low",
+        "unit_price_min": 1300,
+        "unit_price_max": 1800,
+        "allowed_plants": "A",
+        "allowed_segments": "construction|chemical|others",
+        "unit_price_min_usd": 8.666666666666666,
+        "unit_price_max_usd": 12.0
+      },
+      {
+        "product_code": "P003",
+        "product_name": "配線ハーネス",
+        "price_band": "low",
+        "unit_price_min": 1000,
+        "unit_price_max": 1400,
+        "allowed_plants": "B",
+        "allowed_segments": "automotive|electronics",
+        "unit_price_min_usd": 6.666666666666667,
+        "unit_price_max_usd": 9.333333333333334
+      },
+      {
+        "product_code": "P004",
+        "product_name": "燃料制御バルブ",
+        "price_band": "low",
+        "unit_price_min": 1500,
+        "unit_price_max": 1900,
+        "allowed_plants": "A|B",
+        "allowed_segments": "automotive|chemical",
+        "unit_price_min_usd": 10.0,
+        "unit_price_max_usd": 12.666666666666666
+      },
+      {
+        "product_code": "P005",
+        "product_name": "標準ギアセット",
+        "price_band": "low",
+        "unit_price_min": 1400,
+        "unit_price_max": 1700,
+        "allowed_plants": "A",
+        "allowed_segments": "automotive|construction",
+        "unit_price_min_usd": 9.333333333333334,
+        "unit_price_max_usd": 11.333333333333334
+      }
+    ],
+    "segment_master": [
+      {
+        "segment_code": "automotive",
+        "segment_name_jp": "自動車",
+        "demand_share": 0.3,
+        "notes": "主力セグメント・ボリューム大"
+      },
+      {
+        "segment_code": "electronics",
+        "segment_name_jp": "電機・電子",
+        "demand_share": 0.18,
+        "notes": "高価格品比率が高い"
+      },
+      {
+        "segment_code": "construction",
+        "segment_name_jp": "建設・インフラ",
+        "demand_share": 0.15,
+        "notes": "需要大だが粗利低"
+      },
+      {
+        "segment_code": "medical",
+        "segment_name_jp": "医療・ヘルスケア",
+        "demand_share": 0.05,
+        "notes": "高粗利・小規模"
+      },
+      {
+        "segment_code": "food_beverage",
+        "segment_name_jp": "食品・飲料",
+        "demand_share": 0.1,
+        "notes": "中粗利で安定需要"
+      }
+    ]
+  },
+  "segment_share_comparison": [
+    {
+      "segment": "automotive",
+      "theoretical_pct": 30.0,
+      "actual_pct": 29.87,
+      "diff_pt": -0.13
+    },
+    {
+      "segment": "electronics",
+      "theoretical_pct": 18.0,
+      "actual_pct": 16.92,
+      "diff_pt": -1.08
+    },
+    {
+      "segment": "construction",
+      "theoretical_pct": 15.0,
+      "actual_pct": 10.12,
+      "diff_pt": -4.88
+    },
+    {
+      "segment": "medical",
+      "theoretical_pct": 5.0,
+      "actual_pct": 2.72,
+      "diff_pt": -2.28
+    },
+    {
+      "segment": "food_beverage",
+      "theoretical_pct": 10.0,
+      "actual_pct": 0.71,
+      "diff_pt": -9.29
+    },
+    {
+      "segment": "chemical",
+      "theoretical_pct": 8.0,
+      "actual_pct": 18.77,
+      "diff_pt": 10.77
+    },
+    {
+      "segment": "consumer",
+      "theoretical_pct": 9.0,
+      "actual_pct": 5.13,
+      "diff_pt": -3.87
+    },
+    {
+      "segment": "others",
+      "theoretical_pct": 5.0,
+      "actual_pct": 15.75,
+      "diff_pt": 10.75
+    }
+  ]
+}
