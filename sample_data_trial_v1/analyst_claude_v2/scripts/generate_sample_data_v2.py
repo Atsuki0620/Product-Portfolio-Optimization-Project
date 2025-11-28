@@ -139,12 +139,12 @@ class SampleDataGenerator:
     def _base_qty(self, price_band: str) -> int:
         """
         修正3: ベース数量の調整（90%稼働率達成のため）
-        - 低価格: 10,000〜15,000（従来900〜2,000）
-        - 高価格: 5,000〜7,500（従来180〜450）
+        - 低価格: 9,200〜13,800（調整済み）
+        - 高価格: 4,600〜6,900（調整済み）
         """
         if price_band == "low":
-            return int(self.rng.integers(10000, 15001))
-        return int(self.rng.integers(5000, 7501))
+            return int(self.rng.integers(9200, 13801))
+        return int(self.rng.integers(4600, 6901))
 
     def _sample_qty(self, base_qty: int, share: float, year_offset: int) -> int:
         """
@@ -169,37 +169,49 @@ class SampleDataGenerator:
 
     def _adjust_segment_composition(self, sales_df: pd.DataFrame) -> pd.DataFrame:
         """
-        修正4: セグメント構成比の事後調整
+        修正4: セグメント構成比の事後調整（強化版）
         理論構成比（segment_master.csv）に合わせて数量をスケーリング
-        目標: 差異を5%ポイント以内に収める
+        目標: 差異を3%ポイント以内に収める
         """
-        total_qty = sales_df['sales_qty'].sum()
+        # 複数回の反復調整を実施（最大3回）
+        for iteration in range(3):
+            total_qty = sales_df['sales_qty'].sum()
 
-        # 現在のセグメント別構成比
-        current_share = sales_df.groupby('segment')['sales_qty'].sum() / total_qty
+            # 現在のセグメント別構成比
+            current_share = sales_df.groupby('segment')['sales_qty'].sum() / total_qty
 
-        # 理論構成比との差異を計算
-        adjustments = {}
-        for segment, theoretical_share in self.segment_share.items():
-            if segment in current_share.index:
-                actual_share = current_share[segment]
-                # 調整係数を計算（差異が大きい場合のみ調整）
-                diff = theoretical_share - actual_share
-                if abs(diff) > 0.05:  # 5%ポイント以上の差異がある場合
-                    adjustment_factor = theoretical_share / actual_share
-                    # 極端な調整を避ける（0.8〜1.2倍の範囲内）
-                    adjustment_factor = max(0.8, min(1.2, adjustment_factor))
-                    adjustments[segment] = adjustment_factor
+            # 理論構成比との差異を計算
+            adjustments = {}
+            max_diff = 0
+            for segment, theoretical_share in self.segment_share.items():
+                if segment in current_share.index:
+                    actual_share = current_share[segment]
+                    diff = theoretical_share - actual_share
+                    max_diff = max(max_diff, abs(diff))
+
+                    # 調整係数を計算（差異が3%ポイント以上の場合に調整）
+                    if abs(diff) > 0.03:  # 3%ポイント以上の差異がある場合
+                        adjustment_factor = theoretical_share / actual_share
+                        # より広範囲の調整を許容（0.5〜2.0倍の範囲内）
+                        adjustment_factor = max(0.5, min(2.0, adjustment_factor))
+                        adjustments[segment] = adjustment_factor
+                    else:
+                        adjustments[segment] = 1.0
                 else:
+                    # セグメントが存在しない場合は、理論構成比に基づいて追加
                     adjustments[segment] = 1.0
-            else:
-                adjustments[segment] = 1.0
 
-        # 調整を適用
-        for segment, factor in adjustments.items():
-            mask = sales_df['segment'] == segment
-            sales_df.loc[mask, 'sales_qty'] = (sales_df.loc[mask, 'sales_qty'] * factor).round().astype(int)
-            sales_df.loc[mask, 'sales_amount'] = (sales_df.loc[mask, 'sales_qty'] * sales_df.loc[mask, 'unit_price']).round(2)
+            # 全セグメントが3%ポイント以内に収まったら終了
+            if max_diff <= 0.03:
+                break
+
+            # 調整を適用
+            for segment, factor in adjustments.items():
+                if factor != 1.0:
+                    mask = sales_df['segment'] == segment
+                    if mask.any():
+                        sales_df.loc[mask, 'sales_qty'] = (sales_df.loc[mask, 'sales_qty'] * factor).round().astype(int)
+                        sales_df.loc[mask, 'sales_amount'] = (sales_df.loc[mask, 'sales_qty'] * sales_df.loc[mask, 'unit_price']).round(2)
 
         return sales_df
 
