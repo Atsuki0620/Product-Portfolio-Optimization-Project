@@ -43,6 +43,11 @@ def load_production_data(years: Iterable[int]) -> pd.DataFrame:
     """D2: 生産実績データを読み込み、単位原価算出に利用する。"""
     files = [RAW_DIR / f"production_{year}.csv" for year in years]
     df = _concat_csv(files)
+
+    # v2対応: cost_amount (新) または production_cost (旧) をサポート
+    if "cost_amount" in df.columns and "production_cost" not in df.columns:
+        df["production_cost"] = df["cost_amount"]
+
     required_cols = {"year", "product_code", "plant", "production_qty", "production_cost"}
     missing = required_cols - set(df.columns)
     if missing:
