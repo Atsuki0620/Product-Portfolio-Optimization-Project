@@ -55,7 +55,7 @@
   - 拠点 $pl \in PL = \{A, B\}$（2拠点）
 
 - **セグメント集合 $S$**：
-  - セグメント $s \in S = \{\text{industrial}, \text{electronics}, \text{oil\_gas}, \text{others}\}$（4セグメント）
+  - セグメント $s \in S = \{\text{industrial}, \text{electronics}, \text{oil\\_gas}, \text{others}\}$（4セグメント）
 
 ### 2.3 データ粒度
 
@@ -69,31 +69,31 @@
 
 ### 3.1 単価・原価関連パラメータ
 
-- **$\text{unit\_price}[p, pl, s]$**：製品 $p$ を拠点 $pl$ からセグメント $s$ に販売する際の単価（円）
+- **$\text{unit\\_price}[p, pl, s]$**：製品 $p$ を拠点 $pl$ からセグメント $s$ に販売する際の単価（円）
   - データソース：`sales_2024.csv` の `unit_price` カラム
   - 範囲：40,000 ≤ unit_price ≤ 100,000
 
-- **$\text{unit\_cost}[p, pl, s]$**：製品 $p$ を拠点 $pl$ で生産し、セグメント $s$ に販売する際の単位原価（円）
+- **$\text{unit\\_cost}[p, pl, s]$**：製品 $p$ を拠点 $pl$ で生産し、セグメント $s$ に販売する際の単位原価（円）
   - データソース：`sales_2024.csv` から間接的に取得（粗利率から逆算）
-  - 計算式：$\text{unit\_cost} = \text{unit\_price} \times (1 - \text{margin\_rate})$
+  - 計算式：$\text{unit\\_cost} = \text{unit\\_price} \times (1 - \text{margin\\_rate})$
 
 - **$\text{profit}[p, pl, s]$**：単位粗利（円）
-  - 計算式：$\text{profit}[p, pl, s] = \text{unit\_price}[p, pl, s] - \text{unit\_cost}[p, pl, s]$
+  - 計算式：$\text{profit}[p, pl, s] = \text{unit\\_price}[p, pl, s] - \text{unit\\_cost}[p, pl, s]$
 
 ### 3.2 需要関連パラメータ
 
-- **$\text{demand\_max}[p, pl, s]$**：製品 $p$ の拠点 $pl$・セグメント $s$ における需要上限（本）
+- **$\text{demand\\_max}[p, pl, s]$**：製品 $p$ の拠点 $pl$・セグメント $s$ における需要上限（本）
   - データソース：`sales_2024.csv` の `sales_qty` カラム（現状の販売実績を需要上限とみなす）
 
 ### 3.3 拠点キャパシティパラメータ
 
 - **$\text{capacity}[A]$**：拠点Aの年間生産キャパシティ = **300,000 本**
 - **$\text{capacity}[B]$**：拠点Bの年間生産キャパシティ = **204,000 本**
-- **$\text{total\_capacity}$**：全社年間生産キャパシティ = **504,000 本**
+- **$\text{total\\_capacity}$**：全社年間生産キャパシティ = **504,000 本**
 
 ### 3.4 セグメント関連パラメータ
 
-- **$\text{segment\_sales\_mix}[s]$**：セグメント $s$ の販売比（全社販売数量に対する比率）
+- **$\text{segment\\_sales\\_mix}[s]$**：セグメント $s$ の販売比（全社販売数量に対する比率）
   - データソース：`segment_master.csv` の `segment_sales_mix` カラム
   - 値：
 
@@ -104,7 +104,7 @@
 | oil_gas | 0.10 |
 | others | 0.25 |
 
-- **$\text{target\_margin\_rate}[s]$**：セグメント $s$ のターゲット粗利率（平均値）
+- **$\text{target\\_margin\\_rate}[s]$**：セグメント $s$ のターゲット粗利率（平均値）
   - データソース：`segment_master.csv` の `target_margin_rate` カラム
   - 値：
 
@@ -117,7 +117,7 @@
 
 ### 3.5 全社年間販売数量
 
-- **$\text{TOTAL\_SALES\_2024}$**：2024年の全社年間販売数量 = **504,000 本**
+- **$\text{TOTAL\\_SALES\\_2024}$**：2024年の全社年間販売数量 = **504,000 本**
 
 ---
 
@@ -161,7 +161,7 @@ $$
 全製品・全拠点・全セグメントにわたる販売数量の合計は、2024年の全社年間販売数量と一致しなければなりません。
 
 $$
-\sum_{p \in P} \sum_{pl \in PL} \sum_{s \in S} x[p, pl, s] = \text{TOTAL\_SALES\_2024}
+\sum_{p \in P} \sum_{pl \in PL} \sum_{s \in S} x[p, pl, s] = \text{TOTAL\\_SALES\\_2024}
 $$
 
 すなわち、
@@ -188,9 +188,9 @@ $$
 
 ### 6.3 セグメント販売比制約
 
-各セグメントの販売数量は、全社販売数量に対する理論的な販売比（$\text{segment\_sales\_mix}[s]$）に基づき、一定の許容範囲内に収める必要があります。
+各セグメントの販売数量は、全社販売数量に対する理論的な販売比（$\text{segment\\_sales\\_mix}[s]$）に基づき、一定の許容範囲内に収める必要があります。
 
-具体的には、セグメント $s$ の販売数量が、理論値 $\text{TOTAL\_SALES\_2024} \times \text{segment\_sales\_mix}[s]$ に対して **±3 ポイント** 以内に収まるように制約を設定します。
+具体的には、セグメント $s$ の販売数量が、理論値 $\text{TOTAL\\_SALES\\_2024} \times \text{segment\\_sales\\_mix}[s]$ に対して **±3 ポイント** 以内に収まるように制約を設定します。
 
 #### 理論販売数量
 
@@ -208,13 +208,13 @@ $$
 - **下限制約**：
 
 $$
-\sum_{p \in P} \sum_{pl \in PL} x[p, pl, s] \geq \text{TOTAL\_SALES\_2024} \times (\text{segment\_sales\_mix}[s] - 0.03)
+\sum_{p \in P} \sum_{pl \in PL} x[p, pl, s] \geq \text{TOTAL\\_SALES\\_2024} \times (\text{segment\\_sales\\_mix}[s] - 0.03)
 $$
 
 - **上限制約**：
 
 $$
-\sum_{p \in P} \sum_{pl \in PL} x[p, pl, s] \leq \text{TOTAL\_SALES\_2024} \times (\text{segment\_sales\_mix}[s] + 0.03)
+\sum_{p \in P} \sum_{pl \in PL} x[p, pl, s] \leq \text{TOTAL\\_SALES\\_2024} \times (\text{segment\\_sales\\_mix}[s] + 0.03)
 $$
 
 具体的な数値例（industrial セグメントの場合）：
@@ -230,7 +230,7 @@ $$
 各製品・拠点・セグメントの組み合わせについて、販売数量は現状の需要上限（現実の販売実績）を超えてはなりません。
 
 $$
-0 \leq x[p, pl, s] \leq \text{demand\_max}[p, pl, s] \quad \forall p \in P, \forall pl \in PL, \forall s \in S
+0 \leq x[p, pl, s] \leq \text{demand\\_max}[p, pl, s] \quad \forall p \in P, \forall pl \in PL, \forall s \in S
 $$
 
 ### 6.5 生産数量との整合性について
@@ -238,7 +238,7 @@ $$
 本仕様書では、販売最適化の観点から制約を定義しています。生産データ（`production_2024.csv`）については、各 $(p, pl)$ の組み合わせにおいて、生産数量が販売数量の合計と一致する前提を置きます。
 
 $$
-\text{production\_qty}[p, pl] = \sum_{s \in S} x[p, pl, s] \quad \forall p \in P, \forall pl \in PL
+\text{production\\_qty}[p, pl] = \sum_{s \in S} x[p, pl, s] \quad \forall p \in P, \forall pl \in PL
 $$
 
 この整合性は、モデル内で明示的に制約として組み込むか、または事後的な検証ステップで確認します。将来的に、生産計画と販売計画を同時に最適化する統合モデルへの拡張も可能です。
@@ -259,8 +259,8 @@ $$
 2. ソート順に従い、以下の条件を満たす範囲で最大限の数量を割り当てます：
    - 拠点 $pl$ の残余キャパシティを超えない
    - セグメント $s$ の残余販売数量枠を超えない
-   - 需要上限 $\text{demand\_max}[p, pl, s]$ を超えない
-   - 全社総販売数量が $\text{TOTAL\_SALES\_2024}$ を超えない
+   - 需要上限 $\text{demand\\_max}[p, pl, s]$ を超えない
+   - 全社総販売数量が $\text{TOTAL\\_SALES\\_2024}$ を超えない
 3. すべての組み合わせを処理するか、全社総販売数量が目標に達した時点で終了します。
 
 #### セグメント販売比・拠点キャパシティの考慮
