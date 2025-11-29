@@ -1,0 +1,9 @@
+﻿segment_code,segment_name_jp,demand_share,notes
+automotive,自動車,0.30,主力セグメント・ボリューム大
+electronics,電機・電子,0.18,高価格品比率が高い
+construction,建設・インフラ,0.15,需要大だが粗利低
+medical,医療・ヘルスケア,0.05,高粗利・小規模
+food_beverage,食品・飲料,0.10,中粗利で安定需要
+chemical,化学・素材,0.08,低〜中粗利
+consumer,一般消費財,0.09,低粗利・キャンペーン影響大
+others,その他,0.05,ニッチ需要
