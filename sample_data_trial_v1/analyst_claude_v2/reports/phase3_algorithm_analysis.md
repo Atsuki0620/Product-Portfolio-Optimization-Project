@@ -20,45 +20,45 @@
 
 ```mermaid
 flowchart TD
-    Start([開始]) --> LoadData[入力データ読み込み<br/>margin_matrix<br/>segment_demand<br/>CapacityConfig]
+    Start([開始]) --> LoadData[入力データ読み込み<br>margin_matrix<br>segment_demand<br>CapacityConfig]
 
-    LoadData --> BuildOption[オプションテーブル構築<br/>build_option_table]
+    LoadData --> BuildOption[オプションテーブル構築<br>build_option_table]
 
-    BuildOption --> GroupByKey[製品×拠点×セグメントで集約<br/>平均値を算出]
+    BuildOption --> GroupByKey[製品×拠点×セグメントで集約<br>平均値を算出]
 
-    GroupByKey --> CalcMetrics[指標を計算<br/>alloc_cap = mean(sales_qty)<br/>unit_margin = mean(unit_margin)<br/>margin_rate = mean(margin_rate)<br/>avg_price = mean(avg_price)]
+    GroupByKey --> CalcMetrics[指標を計算<br>alloc_cap = mean sales_qty<br>unit_margin = mean unit_margin<br>margin_rate = mean margin_rate<br>avg_price = mean avg_price]
 
-    CalcMetrics --> FilterPositive[粗利がプラスのものだけ抽出<br/>unit_margin > 0]
+    CalcMetrics --> FilterPositive[粗利がプラスのものだけ抽出<br>unit_margin gt 0]
 
-    FilterPositive --> CalcPriority[優先度スコア計算<br/>priority_score = <br/>unit_margin × margin_rate]
+    FilterPositive --> CalcPriority[優先度スコア計算<br>priority_score =<br>unit_margin × margin_rate]
 
-    CalcPriority --> InitCapacity[初期化<br/>plant_remaining = 初期キャパシティ<br/>demand_remaining = セグメント別需要]
+    CalcPriority --> InitCapacity[初期化<br>plant_remaining = 初期キャパシティ<br>demand_remaining = セグメント別需要]
 
-    InitCapacity --> SortOptions[オプションをソート<br/>1. plant 昇順<br/>2. priority_score 降順<br/>3. margin_rate 降順<br/>4. avg_price 降順]
+    InitCapacity --> SortOptions[オプションをソート<br>1. plant 昇順<br>2. priority_score 降順<br>3. margin_rate 降順<br>4. avg_price 降順]
 
-    SortOptions --> LoopStart{オプションを<br/>1件ずつ処理}
+    SortOptions --> LoopStart{オプションを<br>1件ずつ処理}
 
-    LoopStart -->|次の行| CheckPlant{拠点が<br/>残容量あり?}
+    LoopStart -->|次の行| CheckPlant{拠点が<br>残容量あり?}
 
     CheckPlant -->|なし| LoopStart
-    CheckPlant -->|あり| GetConstraints[制約値を取得<br/>demand_cap = demand_remaining<br/>remaining_cap = plant_remaining<br/>alloc_cap = row.alloc_cap]
+    CheckPlant -->|あり| GetConstraints[制約値を取得<br>demand_cap = demand_remaining<br>remaining_cap = plant_remaining<br>alloc_cap = row.alloc_cap]
 
-    GetConstraints --> CalcAllocQty[配賦数量を決定<br/>alloc_qty = min<br/>alloc_cap, demand_cap,<br/>remaining_cap]
+    GetConstraints --> CalcAllocQty[配賦数量を決定<br>alloc_qty = min of<br>alloc_cap, demand_cap,<br>remaining_cap]
 
-    CalcAllocQty --> CheckQty{alloc_qty > 0?}
+    CalcAllocQty --> CheckQty{alloc_qty gt 0?}
 
     CheckQty -->|No| LoopStart
-    CheckQty -->|Yes| RecordAlloc[配賦レコード作成<br/>product_code, plant, segment<br/>alloc_qty, unit_margin<br/>alloc_margin = alloc_qty × unit_margin]
+    CheckQty -->|Yes| RecordAlloc[配賦レコード作成<br>product_code, plant, segment<br>alloc_qty, unit_margin<br>alloc_margin = alloc_qty × unit_margin]
 
-    RecordAlloc --> UpdateRemaining[残量を更新<br/>plant_remaining -= alloc_qty<br/>demand_remaining -= alloc_qty]
+    RecordAlloc --> UpdateRemaining[残量を更新<br>plant_remaining -= alloc_qty<br>demand_remaining -= alloc_qty]
 
     UpdateRemaining --> LoopStart
 
     LoopStart -->|全て処理完了| CreateDF[配賦結果DataFrame作成]
 
-    CreateDF --> Summarize[サマリ作成<br/>拠点別・セグメント別集計<br/>稼働率・充足率計算]
+    CreateDF --> Summarize[サマリ作成<br>拠点別・セグメント別集計<br>稼働率・充足率計算]
 
-    Summarize --> Output[出力<br/>allocation_results.csv<br/>allocation_plant_summary.csv<br/>allocation_segment_summary.csv]
+    Summarize --> Output[出力<br>allocation_results.csv<br>allocation_plant_summary.csv<br>allocation_segment_summary.csv]
 
     Output --> End([終了])
 
