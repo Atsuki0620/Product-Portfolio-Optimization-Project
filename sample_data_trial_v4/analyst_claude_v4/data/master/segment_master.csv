@@ -1,0 +1,5 @@
+segment_code,segment_sales_mix,target_margin_rate
+industrial,0.40,0.10
+electronics,0.25,0.20
+oil_gas,0.10,0.50
+others,0.25,0.20
