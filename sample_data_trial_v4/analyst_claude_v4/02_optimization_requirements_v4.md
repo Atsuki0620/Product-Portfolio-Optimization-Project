@@ -93,7 +93,7 @@
 
 ### 3.4 セグメント関連パラメータ
 
-- **$\mathrm{segment\_sales\_mix}_s$**：セグメント $s$ の販売比（全社販売数量に対する比率）
+- **$\mathrm{segment\_sales\_mix}_{s}$**：セグメント $s$ の販売比（全社販売数量に対する比率）
   - データソース：`segment_master.csv` の `segment_sales_mix` カラム
   - 値：
 
@@ -104,7 +104,7 @@
 | oil_gas | 0.10 |
 | others | 0.25 |
 
-- **$\mathrm{target\_margin\_rate}_s$**：セグメント $s$ のターゲット粗利率（平均値）
+- **$\mathrm{target\_margin\_rate}_{s}$**：セグメント $s$ のターゲット粗利率（平均値）
   - データソース：`segment_master.csv` の `target_margin_rate` カラム
   - 値：
 
@@ -161,7 +161,7 @@ $$
 全製品・全拠点・全セグメントにわたる販売数量の合計は、2024年の全社年間販売数量と一致しなければなりません。
 
 $$
-\sum_{p \in P} \sum_{pl \in PL} \sum_{s \in S} x_{p,pl,s} = \mathrm{TOTAL\\_SALES\\_2024}
+\sum_{p \in P} \sum_{pl \in PL} \sum_{s \in S} x_{p,pl,s} = \mathrm{TOTAL\_SALES\_2024}
 $$
 
 すなわち、
@@ -188,9 +188,9 @@ $$
 
 ### 6.3 セグメント販売比制約
 
-各セグメントの販売数量は、全社販売数量に対する理論的な販売比（$\mathrm{segment\_sales\_mix}_s$）に基づき、一定の許容範囲内に収める必要があります。
+各セグメントの販売数量は、全社販売数量に対する理論的な販売比（$\mathrm{segment\_sales\_mix}_{s}$）に基づき、一定の許容範囲内に収める必要があります。
 
-具体的には、セグメント $s$ の販売数量が、理論値 $\mathrm{TOTAL\_SALES\_2024} \times \mathrm{segment\_sales\_mix}_s$ に対して **±3 ポイント** 以内に収まるように制約を設定します。
+具体的には、セグメント $s$ の販売数量が、理論値 $\mathrm{TOTAL\_SALES\_2024} \times \mathrm{segment\_sales\_mix}_{s}$ に対して **±3 ポイント** 以内に収まるように制約を設定します。
 
 #### 理論販売数量
 
@@ -208,13 +208,13 @@ $$
 - **下限制約**：
 
 $$
-\sum_{p \in P} \sum_{pl \in PL} x_{p,pl,s} \geq \mathrm{TOTAL\\_SALES\\_2024} \times (\mathrm{segment\\_sales\\_mix}_s - 0.03)
+\sum_{p \in P} \sum_{pl \in PL} x_{p,pl,s} \geq \mathrm{TOTAL\_SALES\_2024} \times (\mathrm{segment\_sales\_mix}_{s} - 0.03)
 $$
 
 - **上限制約**：
 
 $$
-\sum_{p \in P} \sum_{pl \in PL} x_{p,pl,s} \leq \mathrm{TOTAL\\_SALES\\_2024} \times (\mathrm{segment\\_sales\\_mix}_s + 0.03)
+\sum_{p \in P} \sum_{pl \in PL} x_{p,pl,s} \leq \mathrm{TOTAL\_SALES\_2024} \times (\mathrm{segment\_sales\_mix}_{s} + 0.03)
 $$
 
 具体的な数値例（industrial セグメントの場合）：
@@ -230,7 +230,7 @@ $$
 各製品・拠点・セグメントの組み合わせについて、販売数量は現状の需要上限（現実の販売実績）を超えてはなりません。
 
 $$
-0 \leq x_{p,pl,s} \leq \mathrm{demand\\_max}_{p,pl,s} \quad \forall p \in P, \forall pl \in PL, \forall s \in S
+0 \leq x_{p,pl,s} \leq \mathrm{demand\_max}_{p,pl,s} \quad \forall p \in P, \forall pl \in PL, \forall s \in S
 $$
 
 ### 6.5 生産数量との整合性について
@@ -238,7 +238,7 @@ $$
 本仕様書では、販売最適化の観点から制約を定義しています。生産データ（`production_2024.csv`）については、各 $(p, pl)$ の組み合わせにおいて、生産数量が販売数量の合計と一致する前提を置きます。
 
 $$
-\mathrm{production\\_qty}_{p,pl} = \sum_{s \in S} x_{p,pl,s} \quad \forall p \in P, \forall pl \in PL
+\mathrm{production\_qty}_{p,pl} = \sum_{s \in S} x_{p,pl,s} \quad \forall p \in P, \forall pl \in PL
 $$
 
 この整合性は、モデル内で明示的に制約として組み込むか、または事後的な検証ステップで確認します。将来的に、生産計画と販売計画を同時に最適化する統合モデルへの拡張も可能です。
