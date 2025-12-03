@@ -252,127 +252,6 @@ class DataPreparation:
         competitor_output = PROCESSED_DIR / "competitor_master_processed.csv"
         save_csv_with_backup(self.competitor_master, competitor_output, backup=False)
 
-    def generate_validation_report(self) -> None:
-        """検証レポートを生成"""
-        print("\n" + "=" * 80)
-        print("検証レポートの生成")
-        print("=" * 80)
-
-        # ディレクトリが存在しない場合は作成
-        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-
-        report_path = REPORTS_DIR / "step1_validation_report.md"
-
-        # レポート作成
-        report = create_report_header(
-            "Step 1: データ準備 検証レポート",
-            "Step 1: Data Preparation"
-        )
-
-        # 概要
-        report += "## 1. 概要\n\n"
-        report += "市場マスタと競合マスタを整備し、最適化に必要な導出値を算出しました。\n\n"
-
-        # マスタ情報
-        report += "## 2. マスタ情報\n\n"
-        report += f"- **市場マスタ**: {len(self.market_master)}セグメント\n"
-        report += f"- **競合マスタ**: {len(self.competitor_master)}件（"
-        report += f"{len(self.competitor_master['competitor_code'].unique())}社）\n\n"
-
-        # セグメント別市場規模
-        report += "## 3. セグメント別市場規模\n\n"
-        report += "| セグメント | 現在市場規模 | CAGR | 3年後市場規模 | 変化率 |\n"
-        report += "|-----------|-------------|------|--------------|-------|\n"
-
-        for idx, row in self.market_master.iterrows():
-            segment = row['segment_code']
-            current = row['current_market_size']
-            after_3y = row['market_size_after_3y']
-            cagr = row['market_cagr']
-            change = ((after_3y - current) / current) * 100
-
-            report += f"| {segment} | {format_number(current)} | "
-            report += f"{format_percentage(cagr)} | {format_number(after_3y)} | "
-            report += f"{change:+.1f}% |\n"
-
-        # セグメント別自社シェアと戦略
-        report += "\n## 4. セグメント別自社シェアと戦略\n\n"
-        report += "| セグメント | 自社シェア | 自社販売数量 | 戦略区分 |\n"
-        report += "|-----------|-----------|-------------|----------|\n"
-
-        for idx, row in self.market_master.iterrows():
-            segment = row['segment_code']
-            share = row['current_share']
-            volume = row['current_sales_volume']
-            strategy = row['strategy_type']
-
-            report += f"| {segment} | {format_percentage(share)} | "
-            report += f"{format_number(volume)} | {strategy} |\n"
-
-        # セグメント別競合状況
-        report += "\n## 5. セグメント別競合状況\n\n"
-
-        for segment in self.market_master['segment_code']:
-            report += f"### {segment}\n\n"
-            report += "| 競合 | シェア | 販売数量 | 競争力評価 |\n"
-            report += "|------|-------|---------|------------|\n"
-
-            competitors = self.competitor_master[
-                self.competitor_master['segment_code'] == segment
-            ].sort_values('current_share', ascending=False)
-
-            for idx, comp in competitors.iterrows():
-                report += f"| {comp['competitor_name']} | "
-                report += f"{format_percentage(comp['current_share'])} | "
-                report += f"{format_number(comp['current_sales_volume'])} | "
-                report += f"{comp['competitive_position']} |\n"
-
-            # 合計
-            total_share = competitors['current_share'].sum()
-            our_share = self.market_master[
-                self.market_master['segment_code'] == segment
-            ]['current_share'].values[0]
-
-            report += f"\n**合計**: 競合シェア = {format_percentage(total_share)}, "
-            report += f"自社シェア = {format_percentage(our_share)}, "
-            report += f"合計 = {format_percentage(total_share + our_share)}\n\n"
-
-        # 検証結果
-        report += "## 6. 検証結果\n\n"
-
-        if not self.validation_errors and not self.validation_warnings:
-            report += "✓ すべての検証をパスしました。\n\n"
-        else:
-            if self.validation_errors:
-                report += "### エラー\n\n"
-                for error in self.validation_errors:
-                    report += f"- ✗ {error}\n"
-                report += "\n"
-
-            if self.validation_warnings:
-                report += "### 警告\n\n"
-                for warning in self.validation_warnings:
-                    report += f"- ⚠ {warning}\n"
-                report += "\n"
-
-        # 出力ファイル
-        report += "## 7. 出力ファイル\n\n"
-        report += "- `data/processed/market_master_processed.csv`: 処理済み市場マスタ\n"
-        report += "- `data/processed/competitor_master_processed.csv`: 処理済み競合マスタ\n\n"
-
-        # 次のステップ
-        report += "## 8. 次のステップ\n\n"
-        report += "Step 2（目標シェア初期算出）に進んでください。\n\n"
-        report += "```bash\n"
-        report += "python scripts/step2_target_share_calculation.py\n"
-        report += "```\n"
-
-        # ファイルに保存
-        with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(report)
-
-        print(f"  ✓ レポートを保存: {report_path}")
-
     def run(self) -> bool:
         """
         Step 1を実行
@@ -395,9 +274,6 @@ class DataPreparation:
 
         # 処理済みマスタ保存
         self.save_processed_masters()
-
-        # レポート生成
-        self.generate_validation_report()
 
         print("\n" + "=" * 80)
         print("✓ Step 1: データ準備が完了しました")

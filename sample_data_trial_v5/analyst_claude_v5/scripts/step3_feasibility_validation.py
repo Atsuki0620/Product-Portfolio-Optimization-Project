@@ -333,152 +333,6 @@ class FeasibilityValidation:
         output_path = PROCESSED_DIR / "target_share_final.csv"
         save_csv_with_backup(self.target_share, output_path, backup=False)
 
-    def generate_validation_report(self) -> None:
-        """検証レポートを生成"""
-        print("\n" + "=" * 80)
-        print("検証レポートの生成")
-        print("=" * 80)
-
-        # ディレクトリが存在しない場合は作成
-        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-
-        report_path = REPORTS_DIR / "step3_validation_report.md"
-
-        # レポート作成
-        report = create_report_header(
-            "Step 3: 実現可能性検証レポート",
-            "Step 3: Feasibility Validation"
-        )
-
-        # 概要
-        report += "## 1. 概要\n\n"
-        report += "目標シェアの実現可能性を3つの観点から検証しました。\n\n"
-
-        # 検証結果サマリー
-        report += "## 2. 検証結果サマリー\n\n"
-
-        error_count = sum(1 for r in self.validation_results if r['status'] == 'ERROR')
-        warning_count = sum(1 for r in self.validation_results if r['status'] == 'WARNING')
-        ok_count = sum(1 for r in self.validation_results if r['status'] == 'OK')
-
-        if self.has_errors:
-            report += f"**総合判定**: ✗ エラーあり（修正が必要です）\n\n"
-        elif self.has_warnings:
-            report += f"**総合判定**: ⚠ 警告あり（確認を推奨します）\n\n"
-        else:
-            report += f"**総合判定**: ✓ すべての検証をパスしました\n\n"
-
-        report += f"- エラー: {error_count}件\n"
-        report += f"- 警告: {warning_count}件\n"
-        report += f"- OK: {ok_count}件\n\n"
-
-        # 検証A: 生産能力検証
-        report += "## 3. 検証A: 生産能力検証\n\n"
-
-        capacity_results = [r for r in self.validation_results if r['validation_type'] == 'A_Capacity']
-        if capacity_results:
-            result = capacity_results[0]
-            report += f"**判定**: {result['status']}\n\n"
-            report += f"- 目標販売数量（下限）: {format_number(result['total_lower'])}本\n"
-            report += f"- 目標販売数量（上限）: {format_number(result['total_upper'])}本\n"
-            report += f"- 総キャパシティ: {format_number(result['capacity'])}本\n\n"
-            report += f"**メッセージ**: {result['message']}\n\n"
-            if result['suggestion']:
-                report += f"**推奨対応**: {result['suggestion']}\n\n"
-
-        # 検証B: 競争環境検証
-        report += "## 4. 検証B: 競争環境検証\n\n"
-
-        competitive_results = [r for r in self.validation_results if r['validation_type'] == 'B_Competitive']
-        report += "| セグメント | 目標上限 | 到達可能上限 | 判定 | メッセージ |\n"
-        report += "|-----------|---------|------------|------|------------|\n"
-
-        for result in competitive_results:
-            status_icon = "✓" if result['status'] == 'OK' else ("⚠" if result['status'] == 'WARNING' else "✗")
-            report += f"| {result['segment_code']} | "
-            report += f"{format_percentage(result['target_upper'])} | "
-            report += f"{format_percentage(result['achievable_upper'])} | "
-            report += f"{status_icon} | {result['message']} |\n"
-
-        report += "\n"
-
-        # エラー・警告詳細
-        errors_warnings = [r for r in competitive_results if r['status'] in ['ERROR', 'WARNING']]
-        if errors_warnings:
-            report += "### 修正推奨\n\n"
-            for result in errors_warnings:
-                report += f"**{result['segment_code']}**: {result['suggestion']}\n\n"
-
-        # 検証C: 戦略整合性検証
-        report += "## 5. 検証C: 戦略整合性検証\n\n"
-
-        strategic_results = [r for r in self.validation_results if r['validation_type'] == 'C_Strategic']
-        report += "| セグメント | 戦略区分 | 現状シェア | 目標範囲 | 判定 | メッセージ |\n"
-        report += "|-----------|---------|-----------|---------|------|------------|\n"
-
-        for result in strategic_results:
-            status_icon = "✓" if result['status'] == 'OK' else ("⚠" if result['status'] == 'WARNING' else "✗")
-            target_range = f"{format_percentage(result['target_lower'])} 〜 {format_percentage(result['target_upper'])}"
-            report += f"| {result['segment_code']} | "
-            report += f"{result['strategy_type']} | "
-            report += f"{format_percentage(result['current_share'])} | "
-            report += f"{target_range} | "
-            report += f"{status_icon} | {result['message']} |\n"
-
-        report += "\n"
-
-        # エラー・警告詳細
-        errors_warnings = [r for r in strategic_results if r['status'] in ['ERROR', 'WARNING']]
-        if errors_warnings:
-            report += "### 修正推奨\n\n"
-            for result in errors_warnings:
-                report += f"**{result['segment_code']}**: {result['suggestion']}\n\n"
-
-        # 次のアクション
-        report += "## 6. 次のアクション\n\n"
-
-        if self.has_errors:
-            report += "### エラーが検出されました\n\n"
-            report += "以下の手順で修正してください：\n\n"
-            report += "1. `data/processed/target_share_initial.csv`を開く\n"
-            report += "2. 上記の推奨対応に従って`target_share_lower`と`target_share_upper`を修正\n"
-            report += "3. Step 3を再実行\n\n"
-            report += "```bash\n"
-            report += "python scripts/step3_feasibility_validation.py\n"
-            report += "```\n\n"
-
-        elif self.has_warnings:
-            report += "### 警告が検出されました\n\n"
-            report += "推奨対応を確認の上、以下のいずれかを選択してください：\n\n"
-            report += "**選択肢1**: 目標を修正する\n"
-            report += "1. `data/processed/target_share_initial.csv`を修正\n"
-            report += "2. Step 3を再実行\n\n"
-            report += "**選択肢2**: このまま続行する\n"
-            report += "1. Step 4（最適化実行）に進む\n\n"
-            report += "```bash\n"
-            report += "python scripts/step4_optimization_execution.py\n"
-            report += "```\n\n"
-
-        else:
-            report += "### すべての検証をパスしました\n\n"
-            report += "Step 4（最適化実行）に進んでください。\n\n"
-            report += "```bash\n"
-            report += "python scripts/step4_optimization_execution.py\n"
-            report += "```\n\n"
-
-        # 出力ファイル
-        report += "## 7. 出力ファイル\n\n"
-        report += "- `data/processed/validation_result.csv`: 検証結果詳細\n"
-        if not self.has_errors:
-            report += "- `data/processed/target_share_final.csv`: 最終目標シェア\n"
-        report += "\n"
-
-        # ファイルに保存
-        with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(report)
-
-        print(f"  ✓ レポートを保存: {report_path}")
-
     def run(self) -> bool:
         """
         Step 3を実行
@@ -505,22 +359,17 @@ class FeasibilityValidation:
         # 最終目標シェア保存
         self.save_target_share_final()
 
-        # レポート生成
-        self.generate_validation_report()
-
         # 結果表示
         print("\n" + "=" * 80)
         if self.has_errors:
             print("✗ Step 3: 検証エラーが検出されました")
             print("=" * 80)
             print("\n目標シェアを修正してから再実行してください。")
-            print(f"詳細: {REPORTS_DIR / 'step3_validation_report.md'}")
             return False
         elif self.has_warnings:
             print("⚠ Step 3: 検証で警告が検出されました")
             print("=" * 80)
-            print("\nレポートを確認してください。このまま続行も可能です。")
-            print(f"詳細: {REPORTS_DIR / 'step3_validation_report.md'}")
+            print("\nこのまま続行も可能です。")
             return True
         else:
             print("✓ Step 3: すべての検証をパスしました")

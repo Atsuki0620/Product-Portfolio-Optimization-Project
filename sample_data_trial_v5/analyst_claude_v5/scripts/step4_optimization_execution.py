@@ -296,163 +296,6 @@ class OptimizationExecution:
         output_path = PROCESSED_DIR / "sales_2024_opt_v5.csv"
         save_csv_with_backup(self.optimization_result, output_path, backup=False)
 
-    def generate_optimization_report(self) -> None:
-        """最適化レポートを生成"""
-        print("\n" + "=" * 80)
-        print("最適化レポートの生成")
-        print("=" * 80)
-
-        # ディレクトリが存在しない場合は作成
-        REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-
-        report_path = REPORTS_DIR / "optimization_report_v5.md"
-
-        # レポート作成
-        report = create_report_header(
-            "Step 4: 最適化実行レポート",
-            "Step 4: Optimization Execution"
-        )
-
-        # 概要
-        report += "## 1. 概要\n\n"
-        report += "確定した目標シェアを制約条件として、粗利最大化の線形計画問題を解きました。\n\n"
-
-        # 最適化結果サマリー
-        report += "## 2. 最適化結果サマリー\n\n"
-
-        # 現状との比較
-        current_total_profit = self.sales_current['total_profit'].sum()
-        optimized_total_profit = self.optimization_result['total_profit'].sum()
-        improvement = optimized_total_profit - current_total_profit
-        improvement_rate = (improvement / current_total_profit) * 100
-
-        report += f"| 指標 | 現状 | 最適化後 | 改善 |\n"
-        report += f"|------|------|---------|------|\n"
-        report += f"| 総粗利 | {format_number(current_total_profit)}円 | "
-        report += f"{format_number(optimized_total_profit)}円 | "
-        report += f"{format_number(improvement):+}円 ({improvement_rate:+.2f}%) |\n"
-        report += f"| 総販売数量 | {format_number(self.sales_current['sales_volume'].sum())}本 | "
-        report += f"{format_number(self.optimization_result['sales_volume'].sum())}本 | "
-        report += f"- |\n\n"
-
-        # セグメント別結果
-        report += "## 3. セグメント別結果\n\n"
-
-        for segment in self.target_share_final['segment_code']:
-            report += f"### {segment}\n\n"
-
-            # 現状データ
-            current_segment = self.sales_current[
-                self.sales_current['segment_code'] == segment
-            ]
-            current_volume = current_segment['sales_volume'].sum()
-            current_profit = current_segment['total_profit'].sum()
-
-            # 最適化後データ
-            optimized_segment = self.optimization_result[
-                self.optimization_result['segment_code'] == segment
-            ]
-            optimized_volume = optimized_segment['sales_volume'].sum()
-            optimized_profit = optimized_segment['total_profit'].sum()
-
-            # 目標シェア
-            target_row = self.target_share_final[
-                self.target_share_final['segment_code'] == segment
-            ].iloc[0]
-
-            # 市場規模
-            limits = self.demand_limits[segment]
-            market_size_3y = limits['market_size_3y']
-
-            # 現状シェア
-            market_row = self.market_master[
-                self.market_master['segment_code'] == segment
-            ].iloc[0]
-            current_share = market_row['current_share']
-
-            # 最適化後シェア
-            optimized_share = optimized_volume / market_size_3y
-
-            report += f"**市場環境**\n\n"
-            report += f"- 3年後市場規模: {format_number(market_size_3y)}本\n"
-            report += f"- 戦略区分: {limits['strategy_type']}\n"
-            report += f"- 目標シェア範囲: {format_percentage(target_row['target_share_lower'])} 〜 "
-            report += f"{format_percentage(target_row['target_share_upper'])}\n\n"
-
-            report += f"**販売数量**\n\n"
-            report += f"| 指標 | 現状 | 最適化後 | 変化 |\n"
-            report += f"|------|------|---------|------|\n"
-            report += f"| 販売数量 | {format_number(current_volume)}本 | "
-            report += f"{format_number(optimized_volume)}本 | "
-            report += f"{format_number(optimized_volume - current_volume):+}本 |\n"
-            report += f"| 市場シェア | {format_percentage(current_share)} | "
-            report += f"{format_percentage(optimized_share)} | "
-            report += f"{format_percentage(optimized_share - current_share):+} |\n"
-            report += f"| セグメント粗利 | {format_number(current_profit)}円 | "
-            report += f"{format_number(optimized_profit)}円 | "
-            report += f"{format_number(optimized_profit - current_profit):+}円 |\n\n"
-
-            # 目標達成判定
-            if target_row['target_share_lower'] <= optimized_share <= target_row['target_share_upper']:
-                report += f"✓ **判定**: 目標シェア範囲内\n\n"
-            else:
-                report += f"⚠ **判定**: 目標シェア範囲外（要確認）\n\n"
-
-        # 拠点別稼働状況
-        report += "## 4. 拠点別稼働状況\n\n"
-
-        report += "| 拠点 | キャパシティ | 現状生産 | 最適化後生産 | 稼働率 |\n"
-        report += "|------|------------|---------|------------|-------|\n"
-
-        for plant, capacity in PLANT_CAPACITY.items():
-            current_plant = self.sales_current[
-                self.sales_current['plant_code'] == plant
-            ]['sales_volume'].sum()
-
-            optimized_plant = self.optimization_result[
-                self.optimization_result['plant_code'] == plant
-            ]['sales_volume'].sum()
-
-            utilization = (optimized_plant / capacity) * 100
-
-            report += f"| Plant {plant} | {format_number(capacity)}本 | "
-            report += f"{format_number(current_plant)}本 | "
-            report += f"{format_number(optimized_plant)}本 | "
-            report += f"{utilization:.1f}% |\n"
-
-        report += "\n"
-
-        # モデル情報
-        report += "## 5. 最適化モデル情報\n\n"
-        report += f"- 決定変数数: {len(self.x)}個\n"
-        report += f"- 制約条件数: {len(self.prob.constraints)}個\n"
-        report += f"- ソルバー: PuLP (CBC)\n"
-        report += f"- 最適化ステータス: {pulp.LpStatus[self.prob.status]}\n\n"
-
-        # 制約条件
-        report += "### 制約条件\n\n"
-        report += "1. **総販売数量制約**: Σx = 504,000本\n"
-        report += "2. **拠点キャパシティ制約**: Plant A ≤ 300,000本、Plant B ≤ 204,000本\n"
-        report += "3. **セグメント需要上限制約**: 各セグメントで目標シェア上限に基づく需要上限\n"
-        report += "4. **セグメント需要下限制約**: 撤退戦略以外のセグメントで目標シェア下限に基づく需要下限\n\n"
-
-        # 出力ファイル
-        report += "## 6. 出力ファイル\n\n"
-        report += "- `data/processed/sales_2024_opt_v5.csv`: 最適化結果（v4互換形式）\n\n"
-
-        # 次のステップ
-        report += "## 7. 次のステップ\n\n"
-        report += "最適化が完了しました。結果を確認し、必要に応じて以下を実施してください：\n\n"
-        report += "- セグメント別の販売計画を各部門と共有\n"
-        report += "- 拠点別の生産計画を製造部門と調整\n"
-        report += "- 目標シェアの達成に向けたアクションプランの策定\n\n"
-
-        # ファイルに保存
-        with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(report)
-
-        print(f"  ✓ レポートを保存: {report_path}")
-
     def run(self) -> bool:
         """
         Step 4を実行
@@ -480,9 +323,6 @@ class OptimizationExecution:
         # 結果保存
         self.save_optimization_result()
 
-        # レポート生成
-        self.generate_optimization_report()
-
         print("\n" + "=" * 80)
         print("✓ Step 4: 最適化実行が完了しました")
         print("=" * 80)
@@ -497,7 +337,6 @@ class OptimizationExecution:
         print(f"  現状総粗利: {format_number(current_profit)}円")
         print(f"  最適化後総粗利: {format_number(optimized_profit)}円")
         print(f"  改善額: {format_number(improvement):+}円 ({improvement_rate:+.2f}%)")
-        print(f"\n詳細レポート: {REPORTS_DIR / 'optimization_report_v5.md'}")
 
         return True
 
