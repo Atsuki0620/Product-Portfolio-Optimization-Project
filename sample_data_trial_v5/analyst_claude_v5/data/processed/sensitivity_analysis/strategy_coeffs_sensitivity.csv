@@ -1,0 +1,5 @@
+segment,strategy,current_share,actual_target_lower,actual_target_upper,current_param_lower,current_param_upper,conservative_lower,conservative_upper,aggressive_lower,aggressive_upper,balanced_lower,balanced_upper
+industrial,withdrawal,0.2,0.0,0.1394,0.0,0.13999999999999999,0.1,0.17,0.0,0.1,0.06,0.16000000000000003
+electronics,maintain,0.2,0.18,0.22,0.18000000000000002,0.22000000000000003,0.19,0.21000000000000002,0.17,0.22999999999999998,0.18000000000000002,0.22000000000000003
+oil_gas,aggressive_expansion,0.15,0.15,0.225,0.15,0.22499999999999998,0.15,0.1875,0.18,0.3,0.1575,0.195
+others,reduction,0.15,0.075,0.15,0.075,0.15,0.11249999999999999,0.15,0.045,0.15,0.09,0.15
