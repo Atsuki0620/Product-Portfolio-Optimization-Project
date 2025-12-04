@@ -126,17 +126,20 @@ class OptimizationExecution:
         print("\n[1/5] 決定変数の定義...")
         for idx, row in self.product_master.iterrows():
             product_code = row['product_code']
-            self.x[product_code] = pulp.LpVariable(
-                f"x_{product_code}",
+            plant_code = row['plant_code']
+            segment_code = row['segment_code']
+            var_key = (product_code, plant_code, segment_code)
+            self.x[var_key] = pulp.LpVariable(
+                f"x_{product_code}_{plant_code}_{segment_code}",
                 lowBound=0,
                 cat='Continuous'
             )
-        print(f"  ✓ {len(self.x)}製品の決定変数を定義しました")
+        print(f"  ✓ {len(self.x)}製品×拠点×セグメント組み合わせの決定変数を定義しました")
 
         # 目的関数の定義（粗利最大化）
         print("\n[2/5] 目的関数の定義（粗利最大化）...")
         objective = pulp.lpSum([
-            row['unit_profit'] * self.x[row['product_code']]
+            row['unit_profit'] * self.x[(row['product_code'], row['plant_code'], row['segment_code'])]
             for idx, row in self.product_master.iterrows()
         ])
         self.prob += objective
@@ -145,20 +148,22 @@ class OptimizationExecution:
         # 制約1: 総販売数量制約
         print("\n[3/5] 制約1: 総販売数量制約...")
         self.prob += (
-            pulp.lpSum([self.x[p] for p in self.x.keys()]) == TOTAL_SALES_TARGET,
+            pulp.lpSum([self.x[p] for p in self.x.keys()]) <= TOTAL_SALES_TARGET,
             "TotalSalesConstraint"
         )
-        print(f"  ✓ 総販売数量 = {format_number(TOTAL_SALES_TARGET)}本")
+        print(f"  ✓ 総販売数量 ≤ {format_number(TOTAL_SALES_TARGET)}本")
 
         # 制約2: 拠点キャパシティ制約
         print("\n[4/5] 制約2: 拠点キャパシティ制約...")
         for plant, capacity in PLANT_CAPACITY.items():
-            plant_products = self.product_master[
-                self.product_master['plant_code'] == plant
-            ]['product_code'].tolist()
+            plant_vars = [
+                self.x[(row['product_code'], row['plant_code'], row['segment_code'])]
+                for idx, row in self.product_master.iterrows()
+                if row['plant_code'] == plant
+            ]
 
             self.prob += (
-                pulp.lpSum([self.x[p] for p in plant_products]) <= capacity,
+                pulp.lpSum(plant_vars) <= capacity,
                 f"PlantCapacity_{plant}"
             )
             print(f"  ✓ Plant {plant} ≤ {format_number(capacity)}本")
@@ -166,20 +171,22 @@ class OptimizationExecution:
         # 制約3: セグメント需要上限制約
         print("\n[5/5] 制約3: セグメント需要制約（上限・下限）...")
         for segment, limits in self.demand_limits.items():
-            segment_products = self.product_master[
-                self.product_master['segment_code'] == segment
-            ]['product_code'].tolist()
+            segment_vars = [
+                self.x[(row['product_code'], row['plant_code'], row['segment_code'])]
+                for idx, row in self.product_master.iterrows()
+                if row['segment_code'] == segment
+            ]
 
             # 需要上限制約
             self.prob += (
-                pulp.lpSum([self.x[p] for p in segment_products]) <= limits['max'],
+                pulp.lpSum(segment_vars) <= limits['max'],
                 f"DemandMax_{segment}"
             )
 
             # 需要下限制約（撤退戦略以外）
             if limits['strategy_type'] != 'withdrawal':
                 self.prob += (
-                    pulp.lpSum([self.x[p] for p in segment_products]) >= limits['min'],
+                    pulp.lpSum(segment_vars) >= limits['min'],
                     f"DemandMin_{segment}"
                 )
                 print(f"  ✓ {segment}: {format_number(limits['min'])} 〜 {format_number(limits['max'])}本")
@@ -247,15 +254,18 @@ class OptimizationExecution:
 
         for idx, row in self.product_master.iterrows():
             product_code = row['product_code']
-            optimal_value = self.x[product_code].varValue
+            plant_code = row['plant_code']
+            segment_code = row['segment_code']
+            var_key = (product_code, plant_code, segment_code)
+            optimal_value = self.x[var_key].varValue
 
             # 整数化（四捨五入）
             optimal_int = round(optimal_value)
 
             results.append({
                 'product_code': product_code,
-                'segment_code': row['segment_code'],
-                'plant_code': row['plant_code'],
+                'segment_code': segment_code,
+                'plant_code': plant_code,
                 'sales_volume': optimal_int,
                 'unit_profit': row['unit_profit'],
                 'total_profit': optimal_int * row['unit_profit']
@@ -328,7 +338,9 @@ class OptimizationExecution:
         print("=" * 80)
 
         # 最終結果表示
-        current_profit = self.sales_current['total_profit'].sum()
+        # 現状の総粗利を計算（sales_2024.csvから）
+        current_profit = (self.sales_current['sales_qty'] *
+                         (self.sales_current['unit_price'] - self.sales_current['unit_cost'])).sum()
         optimized_profit = self.optimization_result['total_profit'].sum()
         improvement = optimized_profit - current_profit
         improvement_rate = (improvement / current_profit) * 100
@@ -336,7 +348,8 @@ class OptimizationExecution:
         print(f"\n【最適化結果サマリー】")
         print(f"  現状総粗利: {format_number(current_profit)}円")
         print(f"  最適化後総粗利: {format_number(optimized_profit)}円")
-        print(f"  改善額: {format_number(improvement):+}円 ({improvement_rate:+.2f}%)")
+        improvement_sign = "+" if improvement >= 0 else ""
+        print(f"  改善額: {improvement_sign}{format_number(improvement)}円 ({improvement_rate:+.2f}%)")
 
         return True
 
