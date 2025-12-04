@@ -1,0 +1,10 @@
+﻿validation_type,segment_code,status,message,suggestion,total_lower,total_upper,capacity,target_upper,achievable_upper,strategy_type,current_share,target_lower
+A_Capacity,ALL,WARNING,目標上限の合計がキャパシティを562本超過しています,上限達成は困難です。目標シェア上限の引き下げを検討してください,246591.824409,504561.57229799987,504000.0,,,,,
+B_Competitive,industrial,OK,到達可能な範囲内（余裕: 30.0%）,,,,,0.1399999999999999,0.44,,,
+B_Competitive,electronics,OK,到達可能な範囲内（余裕: 10.0%）,,,,,0.22,0.32,,,
+B_Competitive,oil_gas,OK,到達可能な範囲内（余裕: 24.3%）,,,,,0.2249999999999999,0.4679999999999999,,,
+B_Competitive,others,OK,到達可能な範囲内（余裕: 21.0%）,,,,,0.15,0.36,,,
+C_Strategic,industrial,OK,撤退戦略と整合しています,,,,,0.1399999999999999,,withdrawal,0.2,0.0
+C_Strategic,electronics,OK,維持戦略と整合しています,,,,,0.22,,maintain,0.2,0.18
+C_Strategic,oil_gas,OK,拡大戦略と整合しています,,,,,0.2249999999999999,,aggressive_expansion,0.15,0.15
+C_Strategic,others,OK,縮小戦略と整合しています,,,,,0.15,,reduction,0.15,0.075

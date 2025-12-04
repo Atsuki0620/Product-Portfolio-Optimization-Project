@@ -1,0 +1,5 @@
+scenario,plant_a_capacity,plant_b_capacity,total_capacity,potential_increase
+Both +20%,360000,244800,604800,100800
+Plant B +50% (Oil&Gas focus),300000,306000,606000,102000
+Plant A +30% (Electronics focus),390000,204000,594000,90000
+Consolidate to Plant A,504000,0,504000,0

@@ -1,0 +1,5 @@
+﻿segment_code,current_share,strategy_type,target_share_lower,target_share_upper
+industrial,0.2,withdrawal,0.0,0.1394
+electronics,0.2,maintain,0.18,0.22
+oil_gas,0.15,aggressive_expansion,0.15,0.225
+others,0.15,reduction,0.075,0.15
