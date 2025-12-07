@@ -1,0 +1,17 @@
+segment_code,competitor_code,competitor_share,competitor_strength,acquisition_rate_lower,acquisition_rate_upper
+industrial,CompetitorA,0.356,strong,0.0,0.01
+industrial,CompetitorB,0.178,moderate,0.007,0.017
+industrial,CompetitorC,0.089,weak,0.017,0.033
+industrial,CompetitorD,0.178,moderate,0.007,0.017
+electronics,CompetitorA,0.4,strong,0.0,0.01
+electronics,CompetitorB,0.2,moderate,0.007,0.017
+electronics,CompetitorC,0.1,weak,0.017,0.033
+electronics,CompetitorD,0.1,weak,0.017,0.033
+oil_gas,CompetitorA,0.3,strong,0.0,0.01
+oil_gas,CompetitorB,0.25,moderate,0.007,0.017
+oil_gas,CompetitorC,0.15,weak,0.017,0.033
+oil_gas,CompetitorD,0.1,weak,0.017,0.033
+others,CompetitorA,0.35,strong,0.0,0.01
+others,CompetitorB,0.2,moderate,0.007,0.017
+others,CompetitorC,0.15,weak,0.017,0.033
+others,CompetitorD,0.1,weak,0.017,0.033
