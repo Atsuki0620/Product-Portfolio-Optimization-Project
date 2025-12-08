@@ -88,6 +88,19 @@
 
 ### 市場セグメント（4種類）
 
+**データソース**: `data/master/market_master.csv`
+
+| 列名 | 説明 | 型 |
+|------|------|-----|
+| segment_code | セグメントコード | 文字列 |
+| market_size | 現在の市場規模 | 数値（本） |
+| market_size_after_1y | 1年後の市場規模 | 数値（本） |
+| cagr | 年平均成長率 | 数値（小数） |
+| current_share | 現状シェア | 数値（小数） |
+| strategy_type | 戦略タイプ | 文字列 |
+
+**データ内容**:
+
 | セグメント | 市場規模 | 1年後市場規模 | CAGR | 現状シェア | 戦略 |
 |-----------|---------|-------------|------|-----------|------|
 | industrial | 1,008,000本 | 997,920本 | -1% | 20% | 撤退 |
@@ -95,20 +108,61 @@
 | **oil_gas** | **756,000本** | **793,800本** | **+5%** | **20%** | **積極拡大** |
 | others | 126,000本 | 123,480本 | -2% | 20% | 縮小 |
 
+**計算式**（1年後市場規模）:
+```
+market_size_after_1y = market_size × (1 + cagr)
+```
+
 **計算例**（oil_gas）:
-- 1年後市場規模 = 756,000 × (1 + 0.05) = **793,800本**
+```
+market_size_after_1y = 756,000 × (1 + 0.05) = 793,800本
+```
 
 ### 拠点別生産能力
+
+**データソース**:
+- 生産能力: `config/config.yaml` の `plant_capacity`
+- 現状生産数量: `data/processed/optimization_input_data.csv` の `sales_volume` を `plant_code` でグループ化して合計
+
+**列名**（config.yaml）:
+```yaml
+plant_capacity:
+  A: 300000  # 拠点Aの生産能力（本）
+  B: 204000  # 拠点Bの生産能力（本）
+```
+
+**計算式**（現状稼働率）:
+```
+現状稼働率 = (現状生産数量 / 生産能力) × 100
+```
+
+**データ内容**:
 
 | 拠点 | 生産能力 | 現状生産数量 | 現状稼働率 |
 |------|---------|------------|-----------|
 | A | 300,000本 | 256,536本 | 85.5% |
 | B | 204,000本 | 225,723本 | **110.6%** ⚠️ |
 
+**計算例**（拠点B）:
+```
+現状稼働率 = (225,723 / 204,000) × 100 = 110.6%
+```
+
 **問題**: 拠点Bが既に生産能力を超過している（110.6%）
 
 ### 顧客分布（代理店モデル）
 
+**データソース**: `scripts/step0_generate_sample_data.py` の顧客マッピング定義
+- 顧客セグメント対応: `customer_segment_map` 変数（lines 113-124）
+- 製品マスターへの反映: `data/master/product_master.csv` の `customer_code` 列
+
+**列名**（product_master.csv内の関連列）:
+```
+customer_code: 顧客コード（Customer_A〜Customer_J）
+segment_code: セグメントコード（顧客が取引可能なセグメント）
+```
+
+**顧客セグメントマッピング**:
 | 顧客 | 取引セグメント | 分類 |
 |------|---------------|------|
 | Customer_A | industrial | 単一セグメント |
@@ -125,9 +179,61 @@
 - 単一セグメント顧客: 6社（60%）
 - 複数セグメント顧客: 4社（40%）
 
+**計算式**（組み合わせ総数）:
+```
+総組み合わせ数 = Σ(各顧客の取引可能セグメント数 × 製品数 × 拠点数)
+```
+
 ---
 
 ## Step1: データ準備
+
+**データソース**:
+- **入力ファイル**:
+  - `data/master/product_master.csv` - 製品マスター（308行の4つ組データ）
+  - `data/master/market_master.csv` - 市場マスター（4セグメント）
+  - `data/master/competitor_master.csv` - 競合マスター（16行）
+  - `data/master/segment_master.csv` - セグメント戦略マスター（4行）
+- **出力ファイル**:
+  - `data/processed/optimization_input_data.csv` - 最適化用統合データ（308行）
+- **実行スクリプト**: `scripts/step1_data_preparation.py`
+
+**主要な列名**（optimization_input_data.csv）:
+```
+# 基本キー（4つ組）
+product_code, plant_code, segment_code, customer_code
+
+# 価格・コスト情報
+unit_price: 単価（円）
+unit_cost: 単位原価（円）
+unit_profit: 単位粗利（円）
+margin_rate: 粗利率（小数）
+
+# 販売情報
+sales_volume: 現状販売数量（本）
+
+# 市場情報（market_master.csvから結合）
+market_size: 現在の市場規模（本）
+market_size_after_1y: 1年後の市場規模（本）
+cagr: 年平均成長率（小数）
+current_share: 現状シェア（小数）
+strategy_type: 戦略タイプ（文字列）
+
+# 統計情報（集約計算）
+total_sales_qty_segment: セグメント別総販売数量（本）
+total_profit_segment: セグメント別総粗利（円）
+total_sales_qty_plant: 拠点別総販売数量（本）
+total_profit_plant: 拠点別総粗利（円）
+```
+
+**データ結合ロジック**:
+```python
+# step1_data_preparation.py (lines 28-35)
+merged = product_master
+    .merge(market_master, on='segment_code', how='left')
+    .merge(competitor_master.groupby('segment_code').agg(...), on='segment_code', how='left')
+    .merge(segment_master, on='segment_code', how='left')
+```
 
 ### 4つ組タプルとは？
 
@@ -153,6 +259,83 @@
 ---
 
 ## Step2: 目標シェア計算（詳細）
+
+**データソース**:
+- **入力ファイル**:
+  - `data/processed/optimization_input_data.csv` - Step1の出力データ（308行）
+  - `config/config.yaml` - 戦略係数設定（`strategy_coefficients`）
+  - `data/master/competitor_master.csv` - 競合情報（16行）
+- **出力ファイル**:
+  - `data/processed/target_calculation_data.csv` - 目標計算済みデータ（308行）
+- **実行スクリプト**: `scripts/step2_target_share_calculation.py`
+
+**config.yamlの関連設定**:
+```yaml
+strategy_coefficients:
+  aggressive_expansion:  # 積極拡大
+    lower: 1.0
+    upper: 1.2
+  maintain:  # 維持
+    lower: 0.95
+    upper: 1.05
+  reduction:  # 縮小
+    lower: 0.9
+    upper: 1.0
+  withdrawal:  # 撤退
+    lower: 0.7
+    upper: 0.9
+
+acquisition_rates:  # 競合奪取率（1年）
+  strong:
+    lower: 0.0
+    upper: 0.01
+  moderate:
+    lower: 0.007
+    upper: 0.017
+  weak:
+    lower: 0.017
+    upper: 0.033
+```
+
+**追加される列名**（target_calculation_data.csv）:
+```
+# 目標計算関連
+strategy_coefficient: 戦略係数（実際に適用された値）
+target_share: 目標シェア（小数）
+target_volume: 目標販売数量（本）
+
+# 奪取可能数量計算
+competitor_share_total: 競合シェア合計（小数）
+acquisition_potential: 奪取可能数量（本）
+max_achievable_volume: 最大可能数量（本）
+
+# 実現可能性判定
+is_achievable: 実現可能性フラグ（True/False）
+excess_volume: 超過数量（本、負の場合は余裕あり）
+```
+
+**計算式**:
+```python
+# 1. 目標シェア計算
+strategy_coefficient = random.uniform(lower, upper)  # 戦略に応じた係数
+target_share = current_share × strategy_coefficient
+
+# 2. 目標販売数量計算
+target_volume = market_size_after_1y × target_share
+
+# 3. 奪取可能数量計算（セグメント別）
+for each competitor in segment:
+    acquisition = market_size_after_1y × competitor_share × acquisition_rate
+acquisition_potential = sum(all acquisitions)
+
+# 4. 最大可能数量計算
+current_volume = market_size_after_1y × current_share
+max_achievable_volume = current_volume + acquisition_potential
+
+# 5. 実現可能性判定
+excess_volume = target_volume - max_achievable_volume
+is_achievable = (excess_volume <= 0)
+```
 
 ### 計算の流れ（oil_gasセグメントの例）
 
@@ -220,6 +403,72 @@
 ---
 
 ## Step3: 実現可能性検証（詳細）
+
+**データソース**:
+- **入力ファイル**:
+  - `data/processed/target_calculation_data.csv` - Step2の出力データ（308行）
+  - `config/config.yaml` - 自動調整設定（`auto_adjustment`）と生産能力（`plant_capacity`）
+- **出力ファイル**:
+  - `data/processed/feasibility_validated_data.csv` - 検証済みデータ（308行）
+- **実行スクリプト**: `scripts/step3_feasibility_validation.py`
+
+**config.yamlの関連設定**:
+```yaml
+auto_adjustment:
+  max_iterations: 5  # 最大調整回数
+  reduction_rate: 0.05  # 削減率（5%）
+
+plant_capacity:
+  A: 300000  # 拠点A生産能力（本）
+  B: 204000  # 拠点B生産能力（本）
+```
+
+**追加される列名**（feasibility_validated_data.csv）:
+```
+# 調整履歴
+adjustment_iterations: 調整回数（整数）
+adjusted_target_volume: 調整後目標数量（本）
+adjustment_reason: 調整理由（文字列）
+
+# 検証結果
+segment_feasibility: セグメント別実現可能性（True/False）
+plant_feasibility: 拠点別実現可能性（True/False）
+final_feasibility_score: 最終実現可能性スコア（0-100点）
+```
+
+**調整アルゴリズム**:
+```python
+# step3_feasibility_validation.py
+for iteration in range(1, max_iterations + 1):
+    # セグメント別制約チェック
+    for segment in segments:
+        if target_volume > max_achievable_volume:
+            # 5%削減
+            adjusted_target = target_volume × (1 - reduction_rate)
+
+    # 拠点別制約チェック
+    for plant in plants:
+        plant_total = sum(targets for plant)
+        if plant_total > plant_capacity:
+            # 該当拠点の製品を5%削減
+            adjusted_target = target_volume × (1 - reduction_rate)
+
+    # 変更がなければ終了
+    if no_changes:
+        break
+```
+
+**実現可能性スコア計算式**:
+```python
+# step3_feasibility_validation.py (lines 180-185)
+score = 100
+if segment_violations > 0:
+    score -= (segment_violations / total_segments) × 30
+if plant_violations > 0:
+    score -= (plant_violations / total_plants) × 30
+if total_target < total_goal:
+    score -= abs(shortage_rate) × 40
+```
 
 ### 初回診断で検出された3つの問題
 
@@ -325,6 +574,94 @@
 ---
 
 ## Step4: 最適化実行
+
+**データソース**:
+- **入力ファイル**:
+  - `data/processed/feasibility_validated_data.csv` - Step3の検証済みデータ（308行）
+  - `config/config.yaml` - 診断設定（`diagnostics`）と総販売目標（`total_sales_target`）
+- **出力ファイル**:
+  - `data/processed/optimization_result.csv` - 最適化結果（308行）
+- **実行スクリプト**: `scripts/step4_optimization_execution.py`
+
+**config.yamlの関連設定**:
+```yaml
+total_sales_target: 504000  # 総販売目標（本）
+
+diagnostics:
+  enabled: true
+  include_feasibility_score: true
+  score_threshold: 70  # スコアが70点未満で警告
+```
+
+**optimization_result.csvの列名**:
+```
+# 基本キー（4つ組）
+product_code, plant_code, segment_code, customer_code
+
+# 最適化結果
+optimized_volume: 最適化後販売数量（本）
+optimized_profit: 最適化後粗利（円）
+
+# 元データからの変化
+volume_change: 数量変化（本）
+volume_change_rate: 数量変化率（小数）
+profit_change: 粗利変化（円）
+profit_change_rate: 粗利変化率（小数）
+
+# その他メタデータ
+solver_status: ソルバーステータス（Optimal/Infeasible等）
+solve_time: 求解時間（秒）
+```
+
+**最適化モデル定義**:
+```python
+# step4_optimization_execution.py (lines 45-85)
+
+# 決定変数: x_i = 各4つ組の販売数量（308個）
+x = {key: LpVariable(f"x_{key}", lowBound=0) for key in all_combinations}
+
+# 目的関数: 総粗利を最大化
+problem += lpSum([x[key] × unit_profit[key] for key in all_combinations])
+
+# 制約1: 拠点別生産能力制約（2個）
+for plant in ['A', 'B']:
+    problem += (
+        lpSum([x[key] for key in combinations where plant_code == plant])
+        <= plant_capacity[plant]
+    )
+
+# 制約2: セグメント別目標制約（8個 = 4セグメント × 上下限）
+for segment in segments:
+    lower_bound = target_volume[segment] × 0.9
+    upper_bound = max_achievable_volume[segment]
+    problem += (
+        lower_bound
+        <= lpSum([x[key] for key in combinations where segment_code == segment])
+        <= upper_bound
+    )
+
+# 制約3: 総販売目標制約（2個）
+total_target = config['total_sales_target']
+problem += lpSum([x[key] for key in all_combinations]) >= total_target × 0.9
+problem += lpSum([x[key] for key in all_combinations]) <= total_target × 1.1
+```
+
+**診断機能（A-4）**:
+```python
+# step4_optimization_execution.py (lines 110-130)
+
+# 事前診断スコア計算
+diagnostic_result = {
+    'feasibility_score': calculate_feasibility_score(),
+    'constraint_violations': check_all_constraints(),
+    'risk_factors': identify_risk_factors(),
+    'recommendations': generate_recommendations()
+}
+
+# スコアが閾値未満の場合、警告を表示
+if diagnostic_result['feasibility_score'] < score_threshold:
+    print(f"警告: 実現可能性スコア {score}点 - 最適化が失敗する可能性")
+```
 
 ### 最適化モデルの構造
 
