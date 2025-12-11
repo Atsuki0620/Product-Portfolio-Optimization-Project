@@ -1,0 +1,5 @@
+segment_code,market_size,market_size_after_1y,cagr,current_share,strategy_type
+industrial,1008000,997920,-0.01,0.2,withdrawal
+electronics,630000,648900,0.03,0.2,maintain
+oil_gas,756000,793800,0.05,0.2,aggressive_expansion
+others,126000,123480,-0.02,0.2,reduction

@@ -1,0 +1,5 @@
+segment_code,segment_name,strategy_type
+industrial,Industrial,withdrawal
+electronics,Electronics,maintain
+oil_gas,Oil & Gas,aggressive_expansion
+others,Others,reduction
